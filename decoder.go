@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"encoding/binary"
@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 	"go.uber.org/zap"
 )
 
@@ -112,7 +112,7 @@ func RegisterAction(accountName AccountName, actionName ActionName, obj interfac
 	RegisteredActions[accountName][actionName] = reflect.TypeOf(obj)
 }
 
-// Decoder implements the EOS unpacking, similar to FC_BUFFER
+// Decoder implements the YTA unpacking, similar to FC_BUFFER
 type Decoder struct {
 	data               []byte
 	pos                int
@@ -482,7 +482,7 @@ func (d *Decoder) decodeStruct(v interface{}, t reflect.Type, rv reflect.Value) 
 
 	seenBinaryExtensionField := false
 	for i := 0; i < l; i++ {
-		tag := t.Field(i).Tag.Get("eos")
+		tag := t.Field(i).Tag.Get("yta")
 		if tag == "-" {
 			continue
 		}
@@ -490,7 +490,7 @@ func (d *Decoder) decodeStruct(v interface{}, t reflect.Type, rv reflect.Value) 
 		typeField := t.Field(i)
 
 		if tag != "binary_extension" && seenBinaryExtensionField {
-			panic(fmt.Sprintf("the `eos: \"binary_extension\"` tags must be packed together at the end of struct fields, problematic field %s", typeField.Name))
+			panic(fmt.Sprintf("the `yta: \"binary_extension\"` tags must be packed together at the end of struct fields, problematic field %s", typeField.Name))
 		}
 
 		if tag == "binary_extension" {

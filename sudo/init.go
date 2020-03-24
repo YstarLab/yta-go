@@ -1,10 +1,10 @@
 package sudo
 
-import eos "github.com/eoscanada/eos-go"
+import yta "github.com/YstarLab/yta-go"
 
 func init() {
-	eos.RegisterAction(AN("eosio.wrap"), ActN("exec"), Exec{})
+	yta.RegisterAction(AN("eosio.wrap"), ActN("exec"), Exec{})
 }
 
-var AN = eos.AN
-var ActN = eos.ActN
+var AN = yta.AN
+var ActN = yta.ActN

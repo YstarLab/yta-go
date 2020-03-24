@@ -1,17 +1,17 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewSellREX(from eos.AccountName, rex eos.Asset) *eos.Action {
-	return &eos.Action{
+func NewSellREX(from yta.AccountName, rex yta.Asset) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("sellrex"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: from, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: from, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(SellREX{
+		ActionData: yta.NewActionData(SellREX{
 			From: from,
 			REX:  rex,
 		}),
@@ -19,6 +19,6 @@ func NewSellREX(from eos.AccountName, rex eos.Asset) *eos.Action {
 }
 
 type SellREX struct {
-	From eos.AccountName
-	REX  eos.Asset
+	From yta.AccountName
+	REX  yta.Asset
 }

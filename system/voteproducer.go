@@ -1,19 +1,19 @@
 package system
 
-import "github.com/eoscanada/eos-go"
+import "github.com/YstarLab/yta-go"
 
 // NewNonce returns a `nonce` action that lives on the
 // `eosio.bios` contract. It should exist only when booting a new
-// network, as it is replaced using the `eos-bios` boot process by the
+// network, as it is replaced using the `yta-bios` boot process by the
 // `eosio.system` contract.
-func NewVoteProducer(voter eos.AccountName, proxy eos.AccountName, producers ...eos.AccountName) *eos.Action {
-	a := &eos.Action{
+func NewVoteProducer(voter yta.AccountName, proxy yta.AccountName, producers ...yta.AccountName) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("voteproducer"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: voter, Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(
+		ActionData: yta.NewActionData(
 			VoteProducer{
 				Voter:     voter,
 				Proxy:     proxy,
@@ -26,7 +26,7 @@ func NewVoteProducer(voter eos.AccountName, proxy eos.AccountName, producers ...
 
 // VoteProducer represents the `eosio.system::voteproducer` action
 type VoteProducer struct {
-	Voter     eos.AccountName   `json:"voter"`
-	Proxy     eos.AccountName   `json:"proxy"`
-	Producers []eos.AccountName `json:"producers"`
+	Voter     yta.AccountName   `json:"voter"`
+	Proxy     yta.AccountName   `json:"proxy"`
+	Producers []yta.AccountName `json:"producers"`
 }

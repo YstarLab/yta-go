@@ -1,18 +1,18 @@
 package forum
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 // NewPropose is an action to submit a proposal for vote.
-func NewPropose(proposer eos.AccountName, proposalName eos.Name, title string, proposalJSON string, expiresAt eos.JSONTime) *eos.Action {
-	a := &eos.Action{
+func NewPropose(proposer yta.AccountName, proposalName yta.Name, title string, proposalJSON string, expiresAt yta.JSONTime) *yta.Action {
+	a := &yta.Action{
 		Account: ForumAN,
 		Name:    ActN("propose"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: proposer, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: proposer, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(Propose{
+		ActionData: yta.NewActionData(Propose{
 			Proposer:     proposer,
 			ProposalName: proposalName,
 			Title:        title,
@@ -25,9 +25,9 @@ func NewPropose(proposer eos.AccountName, proposalName eos.Name, title string, p
 
 // Propose represents the `eosio.forum::propose` action.
 type Propose struct {
-	Proposer     eos.AccountName `json:"proposer"`
-	ProposalName eos.Name        `json:"proposal_name"`
+	Proposer     yta.AccountName `json:"proposer"`
+	ProposalName yta.Name        `json:"proposal_name"`
 	Title        string          `json:"title"`
 	ProposalJSON string          `json:"proposal_json"`
-	ExpiresAt    eos.JSONTime    `json:"expires_at"`
+	ExpiresAt    yta.JSONTime    `json:"expires_at"`
 }

@@ -1,10 +1,10 @@
 package msig
 
-import eos "github.com/eoscanada/eos-go"
+import yta "github.com/YstarLab/yta-go"
 
 type ProposalRow struct {
-	ProposalName       eos.Name              `json:"proposal_name"`
-	RequestedApprovals []eos.PermissionLevel `json:"requested_approvals"`
-	ProvidedApprovals  []eos.PermissionLevel `json:"provided_approvals"`
-	PackedTransaction  eos.HexBytes          `json:"packed_transaction"`
+	ProposalName       yta.Name              `json:"proposal_name"`
+	RequestedApprovals []yta.PermissionLevel `json:"requested_approvals"`
+	ProvidedApprovals  []yta.PermissionLevel `json:"provided_approvals"`
+	PackedTransaction  yta.HexBytes          `json:"packed_transaction"`
 }

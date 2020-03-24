@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"encoding/hex"
@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 )
 
 /*
@@ -220,7 +220,7 @@ type GetTableByScopeRequest struct {
 }
 
 type GetTableByScopeResp struct {
-	More string          `json:"more"`
+	More bool            `json:"more"`
 	Rows json.RawMessage `json:"rows"`
 }
 

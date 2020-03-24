@@ -1,17 +1,16 @@
 package eos_test
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 func ExampleAPI_GetInfo() {
-	api := eos.New(getAPIURL())
+	api := yta.New(getAPIURL())
 
-	info, err := api.GetInfo(context.Background())
+	info, err := api.GetInfo()
 	if err != nil {
 		panic(fmt.Errorf("get info: %s", err))
 	}

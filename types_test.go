@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"encoding/binary"
@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -104,7 +104,7 @@ func TestAssetMarshalUnmarshal(t *testing.T) {
 	}{
 		// Haven't seen such a thing yet though..
 		{"808d5b000000000004454f5300000000",
-			Asset{6000000, Symbol{Precision: 4, Symbol: "EOS"}}},
+			Asset{6000000, Symbol{Precision: 4, Symbol: "YTA"}}},
 	}
 
 	for _, test := range tests {
@@ -126,7 +126,7 @@ func TestAssetMarshalUnmarshal(t *testing.T) {
 		18 = len
 		808d5b0000000000 quantity = 6000000
 		04  precision = 4
-		454f5300000000  "EOS"
+		454f5300000000  "YTA"
 	*/
 }
 
@@ -137,12 +137,12 @@ func TestAssetToString(t *testing.T) {
 	}{
 		// Haven't seen such a thing yet though..
 		{
-			Asset{6000000, Symbol{Precision: 4, Symbol: "EOS"}},
-			"600.0000 EOS",
+			Asset{6000000, Symbol{Precision: 4, Symbol: "YTA"}},
+			"600.0000 YTA",
 		},
 		{
-			Asset{-6000000, Symbol{Precision: 4, Symbol: "EOS"}},
-			"-600.0000 EOS",
+			Asset{-6000000, Symbol{Precision: 4, Symbol: "YTA"}},
+			"-600.0000 YTA",
 		},
 		{
 			Asset{10, Symbol{Precision: 5, Symbol: "SYS"}},
@@ -481,7 +481,7 @@ func TestNameToSymbol(t *testing.T) {
 		expectedErr error
 	}{
 		{".....l2nep1k4", Symbol{Precision: 4, Symbol: "CUSD", symbolCode: uint64(1146312003)}, nil},
-		{"......2ndx2k4", Symbol{Precision: 4, Symbol: "EOS", symbolCode: uint64(5459781)}, nil},
+		{"......2ndx2k4", Symbol{Precision: 4, Symbol: "YTA", symbolCode: uint64(5459781)}, nil},
 	}
 
 	for i, test := range tests {
@@ -525,13 +525,13 @@ func TestStringToSymbol(t *testing.T) {
 		{"2,CUSD", Symbol{Precision: 2, Symbol: "CUSD"}, ".....l2nep1k2", nil},
 		{"2,KARMA", Symbol{Precision: 2, Symbol: "KARMA"}, "...42nemc55k2", nil},
 		{"4,IQ", Symbol{Precision: 4, Symbol: "IQ"}, "........e54k4", nil},
-		{"4,EOS", Symbol{Precision: 4, Symbol: "EOS"}, "......2ndx2k4", nil},
+		{"4,YTA", Symbol{Precision: 4, Symbol: "YTA"}, "......2ndx2k4", nil},
 		{"9,EOSEOSA", Symbol{Precision: 9, Symbol: "EOSEOSA"}, "c5doylendx2kd", nil},
 
-		{"EOS", Symbol{}, "", errors.New("EOS is not a valid symbol")},
-		{",EOS", Symbol{}, "", errors.New(",EOS is not a valid symbol")},
-		{"10,EOS", Symbol{}, "", errors.New("10,EOS is not a valid symbol")},
-		{"10,EOS", Symbol{}, "", errors.New("10,EOS is not a valid symbol")},
+		{"YTA", Symbol{}, "", errors.New("YTA is not a valid symbol")},
+		{",YTA", Symbol{}, "", errors.New(",YTA is not a valid symbol")},
+		{"10,YTA", Symbol{}, "", errors.New("10,YTA is not a valid symbol")},
+		{"10,YTA", Symbol{}, "", errors.New("10,YTA is not a valid symbol")},
 		{"1,EOSEOSEO", Symbol{}, "", errors.New("1,EOSEOSEO is not a valid symbol")},
 	}
 
@@ -564,7 +564,7 @@ func TestStringToSymbolCode(t *testing.T) {
 		{"CUSD", 1146312003, "......24eheo3", nil},
 		{"KARMA", 280470110539, ".....kehed.of", nil},
 		{"IQ", 20809, ".........1cod", nil},
-		{"EOS", 5459781, "........ehbo5", nil},
+		{"YTA", 5459781, "........ehbo5", nil},
 	}
 
 	for i, test := range tests {
@@ -590,7 +590,7 @@ func TestSymbolCode_String(t *testing.T) {
 		{1146312003, "CUSD", nil},
 		{280470110539, "KARMA", nil},
 		{20809, "IQ", nil},
-		{5459781, "EOS", nil},
+		{5459781, "YTA", nil},
 	}
 
 	for i, test := range tests {
@@ -611,7 +611,7 @@ func TestNameToSymbolCode(t *testing.T) {
 		{"......24eheo3", SymbolCode(1146312003), "CUSD", nil},
 		{".....kehed.of", SymbolCode(280470110539), "KARMA", nil},
 		{".........1cod", SymbolCode(20809), "IQ", nil},
-		{"........ehbo5", SymbolCode(5459781), "EOS", nil},
+		{"........ehbo5", SymbolCode(5459781), "YTA", nil},
 	}
 
 	for i, test := range tests {
@@ -674,7 +674,7 @@ func TestBlob(t *testing.T) {
 	t.Run("Data", func(tt *testing.T) {
 		data, err := b.Data()
 		require.Nil(tt, err)
-		assert.Equal(tt, []byte("EOS Go"), data)
+		assert.Equal(tt, []byte("YTA Go"), data)
 	})
 
 	t.Run("malformed data", func(tt *testing.T) {

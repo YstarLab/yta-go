@@ -1,17 +1,17 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewMoveFromSavings(owner eos.AccountName, rex eos.Asset) *eos.Action {
-	return &eos.Action{
+func NewMoveFromSavings(owner yta.AccountName, rex yta.Asset) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("mvfrsavings"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: owner, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: owner, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(MoveFromSavings{
+		ActionData: yta.NewActionData(MoveFromSavings{
 			Owner: owner,
 			REX:   rex,
 		}),
@@ -19,6 +19,6 @@ func NewMoveFromSavings(owner eos.AccountName, rex eos.Asset) *eos.Action {
 }
 
 type MoveFromSavings struct {
-	Owner eos.AccountName
-	REX   eos.Asset
+	Owner yta.AccountName
+	REX   yta.Asset
 }

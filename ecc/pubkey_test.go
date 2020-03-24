@@ -15,7 +15,7 @@ func Test_PublicKeyMarshalUnmarshal(t *testing.T) {
 		expectedKey string
 	}{
 		{
-			name:        "K1-EOS",
+			name:        "K1-YTA",
 			key:         "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
 			expectedKey: "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
 		},
@@ -52,7 +52,7 @@ func TestPublicKey_MarshalJSON(t *testing.T) {
 		expectedJSON string
 	}{
 		{
-			name:         "K1-EOS",
+			name:         "K1-YTA",
 			key:          "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
 			expectedJSON: `"EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV"`,
 		},

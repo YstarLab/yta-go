@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"bytes"
@@ -284,14 +284,14 @@ func TestABI_Write(t *testing.T) {
 		{"caseName": "public_key err", "typeName": "public_key", "expectedValue": "", "json": "{\"testField\":\"EOS1111111111111111111111114T1Anm\"}", "expectedError": fmt.Errorf("writing field: public_key: checkDecode: invalid checksum")},
 		{"caseName": "signature", "typeName": "signature", "expectedValue": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", "json": "{\"testField\":\"SIG_K1_111111111111111111111111111111111111111111111111111111111111111116uk5ne\"}", "expectedError": nil},
 		{"caseName": "signature err", "typeName": "signature", "expectedValue": "", "json": "{\"testField\":\"SIG_K1_BADX11111111111111111111111111111111111111111111111111111111111116uk5ne\"}", "expectedError": fmt.Errorf("writing field: public_key: signature checksum failed, found 3aea1e96 expected e72f76ff")},
-		{"caseName": "symbol", "typeName": "symbol", "expectedValue": "04454f5300000000", "json": "{\"testField\":\"4,EOS\"}", "expectedError": nil},
-		{"caseName": "symbol format error", "typeName": "symbol", "expectedValue": "", "json": "{\"testField\":\"4EOS\"}", "expectedError": fmt.Errorf("writing field: symbol: symbol should be of format '4,EOS'")},
-		{"caseName": "symbol format error", "typeName": "symbol", "expectedValue": "", "json": "{\"testField\":\"abc,EOS\"}", "expectedError": fmt.Errorf("writing field: symbol: strconv.ParseUint: parsing \"abc\": invalid syntax")},
+		{"caseName": "symbol", "typeName": "symbol", "expectedValue": "04454f5300000000", "json": "{\"testField\":\"4,YTA\"}", "expectedError": nil},
+		{"caseName": "symbol format error", "typeName": "symbol", "expectedValue": "", "json": "{\"testField\":\"4EOS\"}", "expectedError": fmt.Errorf("writing field: symbol: symbol should be of format '4,YTA'")},
+		{"caseName": "symbol format error", "typeName": "symbol", "expectedValue": "", "json": "{\"testField\":\"abc,YTA\"}", "expectedError": fmt.Errorf("writing field: symbol: strconv.ParseUint: parsing \"abc\": invalid syntax")},
 		{"caseName": "symbol_code", "typeName": "symbol_code", "expectedValue": "ffffffffffffffff", "json": "{\"testField\":18446744073709551615}", "expectedError": nil},
-		{"caseName": "asset", "typeName": "asset", "expectedValue": "a08601000000000004454f5300000000", "json": "{\"testField\":\"10.0000 EOS\"}", "expectedError": nil},
-		{"caseName": "asset err", "typeName": "asset", "expectedValue": "", "json": "{\"testField\":\"AA.0000 EOS\"}", "expectedError": fmt.Errorf("writing field: asset: strconv.ParseInt: parsing \"AA0000\": invalid syntax")},
-		{"caseName": "extended_asset", "typeName": "extended_asset", "expectedValue": "0a0000000000000004454f5300000000202932c94c833055", "json": "{\"testField\":{\"asset\":\"0.0010 EOS\",\"Contract\":\"eoscanadacom\"}}", "expectedError": nil},
-		{"caseName": "extended_asset err", "typeName": "extended_asset", "expectedValue": "", "json": "{\"testField\":{\"asset\":\"abc.0010 EOS\",\"Contract\":\"eoscanadacom\"}}", "expectedError": fmt.Errorf("writing field: extended_asset: strconv.ParseInt: parsing \"abc0010\": invalid syntax")},
+		{"caseName": "asset", "typeName": "asset", "expectedValue": "a08601000000000004454f5300000000", "json": "{\"testField\":\"10.0000 YTA\"}", "expectedError": nil},
+		{"caseName": "asset err", "typeName": "asset", "expectedValue": "", "json": "{\"testField\":\"AA.0000 YTA\"}", "expectedError": fmt.Errorf("writing field: asset: strconv.ParseInt: parsing \"AA0000\": invalid syntax")},
+		{"caseName": "extended_asset", "typeName": "extended_asset", "expectedValue": "0a0000000000000004454f5300000000202932c94c833055", "json": "{\"testField\":{\"asset\":\"0.0010 YTA\",\"Contract\":\"eoscanadacom\"}}", "expectedError": nil},
+		{"caseName": "extended_asset err", "typeName": "extended_asset", "expectedValue": "", "json": "{\"testField\":{\"asset\":\"abc.0010 YTA\",\"Contract\":\"eoscanadacom\"}}", "expectedError": fmt.Errorf("writing field: extended_asset: strconv.ParseInt: parsing \"abc0010\": invalid syntax")},
 		{"caseName": "bad type", "typeName": "bad.type.1", "expectedValue": nil, "json": "{\"testField\":0}", "expectedError": fmt.Errorf("writing field of type [bad.type.1]: unknown type")},
 		{"caseName": "optional present", "typeName": "string", "expectedValue": "0776616c75652e31", "json": "{\"testField\":\"value.1\"}", "expectedError": nil},
 		{"caseName": "struct", "typeName": "struct_name_1", "expectedValue": "0e746869732e69732e612e74657374", "json": "{\"testField\": {\"field_name_1\":\"this.is.a.test\"}}", "expectedError": nil},

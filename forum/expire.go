@@ -1,18 +1,18 @@
 package forum
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 // NewExpire is an action to expire a proposal ahead of its natural death.
-func NewExpire(proposer eos.AccountName, proposalName eos.Name) *eos.Action {
-	a := &eos.Action{
+func NewExpire(proposer yta.AccountName, proposalName yta.Name) *yta.Action {
+	a := &yta.Action{
 		Account: ForumAN,
 		Name:    ActN("expire"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: proposer, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: proposer, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(Expire{
+		ActionData: yta.NewActionData(Expire{
 			ProposalName: proposalName,
 		}),
 	}
@@ -21,5 +21,5 @@ func NewExpire(proposer eos.AccountName, proposalName eos.Name) *eos.Action {
 
 // Expire represents the `eosio.forum::propose` action.
 type Expire struct {
-	ProposalName eos.Name `json:"proposal_name"`
+	ProposalName yta.Name `json:"proposal_name"`
 }

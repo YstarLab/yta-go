@@ -1,19 +1,19 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 // NewSellRAM will sell at current market price a given number of
 // bytes of RAM.
-func NewSellRAM(account eos.AccountName, bytes uint64) *eos.Action {
-	a := &eos.Action{
+func NewSellRAM(account yta.AccountName, bytes uint64) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("sellram"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: account, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: account, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(SellRAM{
+		ActionData: yta.NewActionData(SellRAM{
 			Account: account,
 			Bytes:   bytes,
 		}),
@@ -23,6 +23,6 @@ func NewSellRAM(account eos.AccountName, bytes uint64) *eos.Action {
 
 // SellRAM represents the `eosio.system::sellram` action.
 type SellRAM struct {
-	Account eos.AccountName `json:"account"`
+	Account yta.AccountName `json:"account"`
 	Bytes   uint64          `json:"bytes"`
 }

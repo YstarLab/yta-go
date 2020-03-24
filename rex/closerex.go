@@ -1,22 +1,22 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewCloseREX(owner eos.AccountName) *eos.Action {
-	return &eos.Action{
+func NewCloseREX(owner yta.AccountName) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("closerex"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: owner, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: owner, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(CloseREX{
+		ActionData: yta.NewActionData(CloseREX{
 			Ownwer: owner,
 		}),
 	}
 }
 
 type CloseREX struct {
-	Ownwer eos.AccountName
+	Ownwer yta.AccountName
 }

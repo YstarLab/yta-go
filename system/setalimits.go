@@ -1,18 +1,18 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 // NewSetalimits sets the account limits. Requires signature from `eosio@active` account.
-func NewSetalimits(account eos.AccountName, ramBytes, netWeight, cpuWeight int64) *eos.Action {
-	a := &eos.Action{
+func NewSetalimits(account yta.AccountName, ramBytes, netWeight, cpuWeight int64) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("setalimit"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: eos.AccountName("eosio"), Permission: PN("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: yta.AccountName("eosio"), Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(Setalimits{
+		ActionData: yta.NewActionData(Setalimits{
 			Account:   account,
 			RAMBytes:  ramBytes,
 			NetWeight: netWeight,
@@ -24,7 +24,7 @@ func NewSetalimits(account eos.AccountName, ramBytes, netWeight, cpuWeight int64
 
 // Setalimits represents the `eosio.system::setalimit` action.
 type Setalimits struct {
-	Account   eos.AccountName `json:"account"`
+	Account   yta.AccountName `json:"account"`
 	RAMBytes  int64           `json:"ram_bytes"`
 	NetWeight int64           `json:"net_weight"`
 	CPUWeight int64           `json:"cpu_weight"`

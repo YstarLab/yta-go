@@ -1,15 +1,15 @@
 package token
 
-import eos "github.com/eoscanada/eos-go"
+import yta "github.com/YstarLab/yta-go"
 
-func NewIssue(to eos.AccountName, quantity eos.Asset, memo string) *eos.Action {
-	return &eos.Action{
+func NewIssue(to yta.AccountName, quantity yta.Asset, memo string) *yta.Action {
+	return &yta.Action{
 		Account: AN("eosio.token"),
 		Name:    ActN("issue"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: AN("eosio"), Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(Issue{
+		ActionData: yta.NewActionData(Issue{
 			To:       to,
 			Quantity: quantity,
 			Memo:     memo,
@@ -19,7 +19,7 @@ func NewIssue(to eos.AccountName, quantity eos.Asset, memo string) *eos.Action {
 
 // Issue represents the `issue` struct on the `eosio.token` contract.
 type Issue struct {
-	To       eos.AccountName `json:"to"`
-	Quantity eos.Asset       `json:"quantity"`
+	To       yta.AccountName `json:"to"`
+	Quantity yta.Asset       `json:"quantity"`
 	Memo     string          `json:"memo"`
 }

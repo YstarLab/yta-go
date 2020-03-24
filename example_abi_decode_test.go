@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"strings"
 
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 func ExampleABI_DecodeTableRowTyped() {
-	abi, err := eos.NewABI(strings.NewReader(abiJSON()))
+	abi, err := yta.NewABI(strings.NewReader(abiJSON()))
 	if err != nil {
 		panic(fmt.Errorf("get ABI: %s", err))
 	}
 
-	tableDef := abi.TableForName(eos.TableName("votes"))
+	tableDef := abi.TableForName(yta.TableName("votes"))
 	if tableDef == nil {
 		panic(fmt.Errorf("table be should be present"))
 	}

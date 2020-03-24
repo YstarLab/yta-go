@@ -1,23 +1,23 @@
 package system
 
-import "github.com/eoscanada/eos-go"
+import "github.com/YstarLab/yta-go"
 
 // NewUpdateAuth creates an action from the `eosio.system` contract
 // called `updateauth`.
 //
 // usingPermission needs to be `owner` if you want to modify the
 // `owner` authorization, otherwise `active` will do for the rest.
-func NewUpdateAuth(account eos.AccountName, permission, parent eos.PermissionName, authority eos.Authority, usingPermission eos.PermissionName) *eos.Action {
-	a := &eos.Action{
+func NewUpdateAuth(account yta.AccountName, permission, parent yta.PermissionName, authority yta.Authority, usingPermission yta.PermissionName) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("updateauth"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{
 				Actor:      account,
 				Permission: usingPermission,
 			},
 		},
-		ActionData: eos.NewActionData(UpdateAuth{
+		ActionData: yta.NewActionData(UpdateAuth{
 			Account:    account,
 			Permission: permission,
 			Parent:     parent,
@@ -34,8 +34,8 @@ func NewUpdateAuth(account eos.AccountName, permission, parent eos.PermissionNam
 //
 // If you change the `owner` permission, there should be no parent.
 type UpdateAuth struct {
-	Account    eos.AccountName    `json:"account"`
-	Permission eos.PermissionName `json:"permission"`
-	Parent     eos.PermissionName `json:"parent"`
-	Auth       eos.Authority      `json:"auth"`
+	Account    yta.AccountName    `json:"account"`
+	Permission yta.PermissionName `json:"permission"`
+	Parent     yta.PermissionName `json:"parent"`
+	Auth       yta.Authority      `json:"auth"`
 }

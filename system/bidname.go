@@ -1,17 +1,17 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewBidname(bidder, newname eos.AccountName, bid eos.Asset) *eos.Action {
-	a := &eos.Action{
+func NewBidname(bidder, newname yta.AccountName, bid yta.Asset) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("bidname"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: bidder, Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(Bidname{
+		ActionData: yta.NewActionData(Bidname{
 			Bidder:  bidder,
 			Newname: newname,
 			Bid:     bid,
@@ -22,7 +22,7 @@ func NewBidname(bidder, newname eos.AccountName, bid eos.Asset) *eos.Action {
 
 // Bidname represents the `eosio.system_contract::bidname` action.
 type Bidname struct {
-	Bidder  eos.AccountName `json:"bidder"`
-	Newname eos.AccountName `json:"newname"`
-	Bid     eos.Asset       `json:"bid"` // specified in EOS
+	Bidder  yta.AccountName `json:"bidder"`
+	Newname yta.AccountName `json:"newname"`
+	Bid     yta.Asset       `json:"bid"` // specified in YTA
 }

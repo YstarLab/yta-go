@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	eos "github.com/eoscanada/eos-go"
-	"github.com/eoscanada/eos-go/ecc"
+	yta "github.com/YstarLab/yta-go"
+	"github.com/YstarLab/yta-go/ecc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -17,31 +17,31 @@ import (
 func TestActionNewAccount(t *testing.T) {
 	pubKey, err := ecc.NewPublicKey("EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV")
 	require.NoError(t, err)
-	a := &eos.Action{
-		Account: eos.AccountName("eosio"),
-		Name:    eos.ActionName("newaccount"),
-		Authorization: []eos.PermissionLevel{
+	a := &yta.Action{
+		Account: yta.AccountName("eosio"),
+		Name:    yta.ActionName("newaccount"),
+		Authorization: []yta.PermissionLevel{
 			{
-				Actor:      eos.AccountName("eosio"),
-				Permission: eos.PermissionName("active"),
+				Actor:      yta.AccountName("eosio"),
+				Permission: yta.PermissionName("active"),
 			},
 		},
-		ActionData: eos.NewActionData(NewAccount{
-			Creator: eos.AccountName("eosio"),
-			Name:    eos.AccountName("abourget"),
-			Owner: eos.Authority{
+		ActionData: yta.NewActionData(NewAccount{
+			Creator: yta.AccountName("eosio"),
+			Name:    yta.AccountName("abourget"),
+			Owner: yta.Authority{
 				Threshold: 1,
-				Keys: []eos.KeyWeight{
-					eos.KeyWeight{
+				Keys: []yta.KeyWeight{
+					yta.KeyWeight{
 						PublicKey: pubKey,
 						Weight:    1,
 					},
 				},
 			},
-			Active: eos.Authority{
+			Active: yta.Authority{
 				Threshold: 1,
-				Keys: []eos.KeyWeight{
-					eos.KeyWeight{
+				Keys: []yta.KeyWeight{
+					yta.KeyWeight{
 						PublicKey: pubKey,
 						Weight:    1,
 					},
@@ -49,11 +49,11 @@ func TestActionNewAccount(t *testing.T) {
 			},
 		}),
 	}
-	tx := &eos.Transaction{
-		Actions: []*eos.Action{a},
+	tx := &yta.Transaction{
+		Actions: []*yta.Action{a},
 	}
 
-	buf, err := eos.MarshalBinary(tx)
+	buf, err := yta.MarshalBinary(tx)
 	// println(string(buf))
 	assert.NoError(t, err)
 
@@ -77,25 +77,25 @@ func TestActionNewAccount(t *testing.T) {
 }
 
 func TestMarshalTransactionAndSigned(t *testing.T) {
-	a := &eos.Action{
-		Account: eos.AccountName("eosio"),
-		Name:    eos.ActionName("newaccount"),
-		Authorization: []eos.PermissionLevel{
+	a := &yta.Action{
+		Account: yta.AccountName("eosio"),
+		Name:    yta.ActionName("newaccount"),
+		Authorization: []yta.PermissionLevel{
 			{
-				Actor:      eos.AccountName("eosio"),
-				Permission: eos.PermissionName("active"),
+				Actor:      yta.AccountName("eosio"),
+				Permission: yta.PermissionName("active"),
 			},
 		},
-		ActionData: eos.NewActionData(NewAccount{
-			Creator: eos.AccountName("eosio"),
-			Name:    eos.AccountName("abourget"),
+		ActionData: yta.NewActionData(NewAccount{
+			Creator: yta.AccountName("eosio"),
+			Name:    yta.AccountName("abourget"),
 		}),
 	}
-	tx := &eos.SignedTransaction{Transaction: &eos.Transaction{
-		Actions: []*eos.Action{a},
+	tx := &yta.SignedTransaction{Transaction: &yta.Transaction{
+		Actions: []*yta.Action{a},
 	}}
 
-	buf, err := eos.MarshalBinary(tx)
+	buf, err := yta.MarshalBinary(tx)
 	assert.NoError(t, err)
 	// 00096e88 0000 0000 00000000 0000 0000 00
 	// actions: 01
@@ -111,47 +111,47 @@ func TestMarshalTransactionAndSigned(t *testing.T) {
 }
 
 func TestMarshalTransactionAndPack(t *testing.T) {
-	a := &eos.Action{
-		Account: eos.AccountName("eosio"),
-		Name:    eos.ActionName("newaccount"),
-		Authorization: []eos.PermissionLevel{
+	a := &yta.Action{
+		Account: yta.AccountName("eosio"),
+		Name:    yta.ActionName("newaccount"),
+		Authorization: []yta.PermissionLevel{
 			{
-				Actor:      eos.AccountName("eosio"),
-				Permission: eos.PermissionName("active"),
+				Actor:      yta.AccountName("eosio"),
+				Permission: yta.PermissionName("active"),
 			},
 		},
-		ActionData: eos.NewActionData(NewAccount{
-			Creator: eos.AccountName("eosio"),
-			Name:    eos.AccountName("abourget"),
+		ActionData: yta.NewActionData(NewAccount{
+			Creator: yta.AccountName("eosio"),
+			Name:    yta.AccountName("abourget"),
 		}),
 	}
-	b := &eos.Action{
-		Account: eos.AccountName("eosio"),
-		Name:    eos.ActionName("transfer"),
-		Authorization: []eos.PermissionLevel{
+	b := &yta.Action{
+		Account: yta.AccountName("eosio"),
+		Name:    yta.ActionName("transfer"),
+		Authorization: []yta.PermissionLevel{
 			{
-				Actor:      eos.AccountName("eosio"),
-				Permission: eos.PermissionName("active"),
+				Actor:      yta.AccountName("eosio"),
+				Permission: yta.PermissionName("active"),
 			},
 		},
-		ActionData: eos.NewActionData(NewAccount{
-			Creator: eos.AccountName("eosio"),
-			Name:    eos.AccountName("cbillett"),
+		ActionData: yta.NewActionData(NewAccount{
+			Creator: yta.AccountName("eosio"),
+			Name:    yta.AccountName("cbillett"),
 		}),
 	}
 
-	tx := &eos.Transaction{
-		Actions: []*eos.Action{a, b},
+	tx := &yta.Transaction{
+		Actions: []*yta.Action{a, b},
 	}
 
 	buf, err := json.Marshal(tx)
 	fmt.Println("Transaction: ", string(buf))
 
-	signedTx := &eos.SignedTransaction{Transaction: tx}
+	signedTx := &yta.SignedTransaction{Transaction: tx}
 	buf, err = json.Marshal(signedTx)
 	fmt.Println("Signed Transaction: ", string(buf))
 
-	packedTx, err := signedTx.Pack(eos.CompressionNone)
+	packedTx, err := signedTx.Pack(yta.CompressionNone)
 	assert.NoError(t, err)
 
 	buf, err = json.Marshal(packedTx)

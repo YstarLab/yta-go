@@ -1,8 +1,7 @@
-package eos
+package yta
 
 import (
 	"bytes"
-	"context"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -16,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 )
 
 type API struct {
@@ -34,7 +33,7 @@ type API struct {
 	lastGetInfoStamp time.Time
 	lastGetInfoLock  sync.Mutex
 
-	customGetRequiredKeys func(ctx context.Context, tx *Transaction) ([]ecc.PublicKey, error)
+	customGetRequiredKeys func(tx *Transaction) ([]ecc.PublicKey, error)
 }
 
 func New(baseURL string) *API {
@@ -67,10 +66,10 @@ func New(baseURL string) *API {
 // 2018).  Some endpoints front their node with a keep-alive
 // supporting web server.  Adjust the `KeepAlive` support of the
 // client accordingly.
-func (api *API) FixKeepAlives(ctx context.Context) bool {
+func (api *API) FixKeepAlives() bool {
 	// Yeah, to provoke a keep alive, you need to query twice.
 	for i := 0; i < 5; i++ {
-		_, err := api.GetInfo(ctx)
+		_, err := api.GetInfo()
 		if api.Debug {
 			log.Println("err", err)
 		}
@@ -80,7 +79,7 @@ func (api *API) FixKeepAlives(ctx context.Context) bool {
 				return true
 			}
 		}
-		_, err = api.GetNetConnections(ctx)
+		_, err = api.GetNetConnections()
 		if api.Debug {
 			log.Println("err", err)
 		}
@@ -102,7 +101,7 @@ func (api *API) EnableKeepAlives() bool {
 	return false
 }
 
-func (api *API) SetCustomGetRequiredKeys(f func(ctx context.Context, tx *Transaction) ([]ecc.PublicKey, error)) {
+func (api *API) SetCustomGetRequiredKeys(f func(tx *Transaction) ([]ecc.PublicKey, error)) {
 	api.customGetRequiredKeys = f
 }
 
@@ -112,57 +111,57 @@ func (api *API) SetSigner(s Signer) {
 
 // ProducerPause will pause block production on a nodeos with
 // `producer_api` plugin loaded.
-func (api *API) ProducerPause(ctx context.Context) error {
-	return api.call(ctx, "producer", "pause", nil, nil)
+func (api *API) ProducerPause() error {
+	return api.call("producer", "pause", nil, nil)
 }
 
 // CreateSnapshot will write a snapshot file on a nodeos with
 // `producer_api` plugin loaded.
-func (api *API) CreateSnapshot(ctx context.Context) (out *CreateSnapshotResp, err error) {
-	err = api.call(ctx, "producer", "create_snapshot", nil, &out)
+func (api *API) CreateSnapshot() (out *CreateSnapshotResp, err error) {
+	err = api.call("producer", "create_snapshot", nil, &out)
 	return
 }
 
 // GetIntegrityHash will produce a hash corresponding to current
 // state. Requires `producer_api` and useful when loading
 // from a snapshot
-func (api *API) GetIntegrityHash(ctx context.Context) (out *GetIntegrityHashResp, err error) {
-	err = api.call(ctx, "producer", "get_integrity_hash", nil, &out)
+func (api *API) GetIntegrityHash() (out *GetIntegrityHashResp, err error) {
+	err = api.call("producer", "get_integrity_hash", nil, &out)
 	return
 }
 
 // ProducerResume will resume block production on a nodeos with
 // `producer_api` plugin loaded. Obviously, this needs to be a
 // producing node on the producers schedule for it to do anything.
-func (api *API) ProducerResume(ctx context.Context) error {
-	return api.call(ctx, "producer", "resume", nil, nil)
+func (api *API) ProducerResume() error {
+	return api.call("producer", "resume", nil, nil)
 }
 
 // IsProducerPaused queries the blockchain for the pause statement of
 // block production.
-func (api *API) IsProducerPaused(ctx context.Context) (out bool, err error) {
-	err = api.call(ctx, "producer", "paused", nil, &out)
+func (api *API) IsProducerPaused() (out bool, err error) {
+	err = api.call("producer", "paused", nil, &out)
 	return
 }
 
-func (api *API) GetAccount(ctx context.Context, name AccountName) (out *AccountResp, err error) {
-	err = api.call(ctx, "chain", "get_account", M{"account_name": name}, &out)
+func (api *API) GetAccount(name AccountName) (out *AccountResp, err error) {
+	err = api.call("chain", "get_account", M{"account_name": name}, &out)
 	return
 }
 
-func (api *API) GetRawCodeAndABI(ctx context.Context, account AccountName) (out *GetRawCodeAndABIResp, err error) {
-	err = api.call(ctx, "chain", "get_raw_code_and_abi", M{"account_name": account}, &out)
+func (api *API) GetRawCodeAndABI(account AccountName) (out *GetRawCodeAndABIResp, err error) {
+	err = api.call("chain", "get_raw_code_and_abi", M{"account_name": account}, &out)
 	return
 }
 
-func (api *API) GetCode(ctx context.Context, account AccountName) (out *GetCodeResp, err error) {
-	err = api.call(ctx, "chain", "get_code", M{"account_name": account, "code_as_wasm": true}, &out)
+func (api *API) GetCode(account AccountName) (out *GetCodeResp, err error) {
+	err = api.call("chain", "get_code", M{"account_name": account, "code_as_wasm": true}, &out)
 	return
 }
 
-func (api *API) GetCodeHash(ctx context.Context, account AccountName) (out Checksum256, err error) {
+func (api *API) GetCodeHash(account AccountName) (out Checksum256, err error) {
 	resp := GetCodeHashResp{}
-	if err = api.call(ctx, "chain", "get_code_hash", M{"account_name": account}, &resp); err != nil {
+	if err = api.call("chain", "get_code_hash", M{"account_name": account}, &resp); err != nil {
 		return
 	}
 
@@ -170,14 +169,14 @@ func (api *API) GetCodeHash(ctx context.Context, account AccountName) (out Check
 	return Checksum256(buffer), err
 }
 
-func (api *API) GetABI(ctx context.Context, account AccountName) (out *GetABIResp, err error) {
-	err = api.call(ctx, "chain", "get_abi", M{"account_name": account}, &out)
+func (api *API) GetABI(account AccountName) (out *GetABIResp, err error) {
+	err = api.call("chain", "get_abi", M{"account_name": account}, &out)
 	return
 }
 
-func (api *API) ABIJSONToBin(ctx context.Context, code AccountName, action Name, payload M) (out HexBytes, err error) {
+func (api *API) ABIJSONToBin(code AccountName, action Name, payload M) (out HexBytes, err error) {
 	resp := ABIJSONToBinResp{}
-	err = api.call(ctx, "chain", "abi_json_to_bin", M{"code": code, "action": action, "args": payload}, &resp)
+	err = api.call("chain", "abi_json_to_bin", M{"code": code, "action": action, "args": payload}, &resp)
 	if err != nil {
 		return
 	}
@@ -186,9 +185,9 @@ func (api *API) ABIJSONToBin(ctx context.Context, code AccountName, action Name,
 	return HexBytes(buffer), err
 }
 
-func (api *API) ABIBinToJSON(ctx context.Context, code AccountName, action Name, payload HexBytes) (out M, err error) {
+func (api *API) ABIBinToJSON(code AccountName, action Name, payload HexBytes) (out M, err error) {
 	resp := ABIBinToJSONResp{}
-	err = api.call(ctx, "chain", "abi_bin_to_json", M{"code": code, "action": action, "binargs": payload}, &resp)
+	err = api.call("chain", "abi_bin_to_json", M{"code": code, "action": action, "binargs": payload}, &resp)
 	if err != nil {
 		return
 	}
@@ -196,34 +195,34 @@ func (api *API) ABIBinToJSON(ctx context.Context, code AccountName, action Name,
 	return resp.Args, nil
 }
 
-func (api *API) WalletCreate(ctx context.Context, walletName string) (err error) {
-	return api.call(ctx, "wallet", "create", walletName, nil)
+func (api *API) WalletCreate(walletName string) (err error) {
+	return api.call("wallet", "create", walletName, nil)
 }
 
-func (api *API) WalletOpen(ctx context.Context, walletName string) (err error) {
-	return api.call(ctx, "wallet", "open", walletName, nil)
+func (api *API) WalletOpen(walletName string) (err error) {
+	return api.call("wallet", "open", walletName, nil)
 }
 
-func (api *API) WalletLock(ctx context.Context, walletName string) (err error) {
-	return api.call(ctx, "wallet", "lock", walletName, nil)
+func (api *API) WalletLock(walletName string) (err error) {
+	return api.call("wallet", "lock", walletName, nil)
 }
 
-func (api *API) WalletLockAll(ctx context.Context) (err error) {
-	return api.call(ctx, "wallet", "lock_all", nil, nil)
+func (api *API) WalletLockAll() (err error) {
+	return api.call("wallet", "lock_all", nil, nil)
 }
 
-func (api *API) WalletUnlock(ctx context.Context, walletName, password string) (err error) {
-	return api.call(ctx, "wallet", "unlock", []string{walletName, password}, nil)
+func (api *API) WalletUnlock(walletName, password string) (err error) {
+	return api.call("wallet", "unlock", []string{walletName, password}, nil)
 }
 
 // WalletImportKey loads a new WIF-encoded key into the wallet.
-func (api *API) WalletImportKey(ctx context.Context, walletName, wifPrivKey string) (err error) {
-	return api.call(ctx, "wallet", "import_key", []string{walletName, wifPrivKey}, nil)
+func (api *API) WalletImportKey(walletName, wifPrivKey string) (err error) {
+	return api.call("wallet", "import_key", []string{walletName, wifPrivKey}, nil)
 }
 
-func (api *API) WalletPublicKeys(ctx context.Context) (out []ecc.PublicKey, err error) {
+func (api *API) WalletPublicKeys() (out []ecc.PublicKey, err error) {
 	var textKeys []string
-	err = api.call(ctx, "wallet", "get_public_keys", nil, &textKeys)
+	err = api.call("wallet", "get_public_keys", nil, &textKeys)
 	if err != nil {
 		return nil, err
 	}
@@ -239,8 +238,8 @@ func (api *API) WalletPublicKeys(ctx context.Context) (out []ecc.PublicKey, err 
 	return
 }
 
-func (api *API) ListWallets(ctx context.Context, walletName ...string) (out []string, err error) {
-	err = api.call(ctx, "wallet", "list_wallets", walletName, &out)
+func (api *API) ListWallets(walletName ...string) (out []string, err error) {
+	err = api.call("wallet", "list_wallets", walletName, &out)
 	if err != nil {
 		return nil, err
 	}
@@ -248,9 +247,9 @@ func (api *API) ListWallets(ctx context.Context, walletName ...string) (out []st
 	return
 }
 
-func (api *API) ListKeys(ctx context.Context, walletNames ...string) (out []*ecc.PrivateKey, err error) {
+func (api *API) ListKeys(walletNames ...string) (out []*ecc.PrivateKey, err error) {
 	var textKeys []string
-	err = api.call(ctx, "wallet", "list_keys", walletNames, &textKeys)
+	err = api.call("wallet", "list_keys", walletNames, &textKeys)
 	if err != nil {
 		return nil, err
 	}
@@ -266,9 +265,9 @@ func (api *API) ListKeys(ctx context.Context, walletNames ...string) (out []*ecc
 	return
 }
 
-func (api *API) GetPublicKeys(ctx context.Context) (out []*ecc.PublicKey, err error) {
+func (api *API) GetPublicKeys() (out []*ecc.PublicKey, err error) {
 	var textKeys []string
-	err = api.call(ctx, "wallet", "get_public_keys", nil, &textKeys)
+	err = api.call("wallet", "get_public_keys", nil, &textKeys)
 	if err != nil {
 		return nil, err
 	}
@@ -284,17 +283,17 @@ func (api *API) GetPublicKeys(ctx context.Context) (out []*ecc.PublicKey, err er
 	return
 }
 
-func (api *API) WalletSetTimeout(ctx context.Context, timeout int32) (err error) {
-	return api.call(ctx, "wallet", "set_timeout", timeout, nil)
+func (api *API) WalletSetTimeout(timeout int32) (err error) {
+	return api.call("wallet", "set_timeout", timeout, nil)
 }
 
-func (api *API) WalletSignTransaction(ctx context.Context, tx *SignedTransaction, chainID []byte, pubKeys ...ecc.PublicKey) (out *WalletSignTransactionResp, err error) {
+func (api *API) WalletSignTransaction(tx *SignedTransaction, chainID []byte, pubKeys ...ecc.PublicKey) (out *WalletSignTransactionResp, err error) {
 	var textKeys []string
 	for _, key := range pubKeys {
 		textKeys = append(textKeys, key.String())
 	}
 
-	err = api.call(ctx, "wallet", "sign_transaction", []interface{}{
+	err = api.call("wallet", "sign_transaction", []interface{}{
 		tx,
 		textKeys,
 		hex.EncodeToString(chainID),
@@ -305,33 +304,33 @@ func (api *API) WalletSignTransaction(ctx context.Context, tx *SignedTransaction
 // SignPushActions will create a transaction, fill it with default
 // values, sign it and submit it to the chain.  It is the highest
 // level function on top of the `/v1/chain/push_transaction` endpoint.
-func (api *API) SignPushActions(ctx context.Context, a ...*Action) (out *PushTransactionFullResp, err error) {
-	return api.SignPushActionsWithOpts(ctx, a, nil)
+func (api *API) SignPushActions(a ...*Action) (out *PushTransactionFullResp, err error) {
+	return api.SignPushActionsWithOpts(a, nil)
 }
 
-func (api *API) SignPushActionsWithOpts(ctx context.Context, actions []*Action, opts *TxOptions) (out *PushTransactionFullResp, err error) {
+func (api *API) SignPushActionsWithOpts(actions []*Action, opts *TxOptions) (out *PushTransactionFullResp, err error) {
 	if opts == nil {
 		opts = &TxOptions{}
 	}
 
-	if err := opts.FillFromChain(ctx, api); err != nil {
+	if err := opts.FillFromChain(api); err != nil {
 		return nil, err
 	}
 
 	tx := NewTransaction(actions, opts)
 
-	return api.SignPushTransaction(ctx, tx, opts.ChainID, opts.Compress)
+	return api.SignPushTransaction(tx, opts.ChainID, opts.Compress)
 }
 
 // SignPushTransaction will sign a transaction and submit it to the
 // chain.
-func (api *API) SignPushTransaction(ctx context.Context, tx *Transaction, chainID Checksum256, compression CompressionType) (out *PushTransactionFullResp, err error) {
-	_, packed, err := api.SignTransaction(ctx, tx, chainID, compression)
+func (api *API) SignPushTransaction(tx *Transaction, chainID Checksum256, compression CompressionType) (out *PushTransactionFullResp, err error) {
+	_, packed, err := api.SignTransaction(tx, chainID, compression)
 	if err != nil {
 		return nil, err
 	}
 
-	return api.PushTransaction(ctx, packed)
+	return api.PushTransaction(packed)
 }
 
 // SignTransaction will sign and pack a transaction, but not submit to
@@ -344,7 +343,7 @@ func (api *API) SignPushTransaction(ctx context.Context, tx *Transaction, chainI
 //
 // To sign a transaction, you need a Signer defined on the `API`
 // object. See SetSigner.
-func (api *API) SignTransaction(ctx context.Context, tx *Transaction, chainID Checksum256, compression CompressionType) (*SignedTransaction, *PackedTransaction, error) {
+func (api *API) SignTransaction(tx *Transaction, chainID Checksum256, compression CompressionType) (*SignedTransaction, *PackedTransaction, error) {
 	if api.Signer == nil {
 		return nil, nil, fmt.Errorf("no Signer configured")
 	}
@@ -354,19 +353,19 @@ func (api *API) SignTransaction(ctx context.Context, tx *Transaction, chainID Ch
 	var requiredKeys []ecc.PublicKey
 	if api.customGetRequiredKeys != nil {
 		var err error
-		requiredKeys, err = api.customGetRequiredKeys(ctx, tx)
+		requiredKeys, err = api.customGetRequiredKeys(tx)
 		if err != nil {
 			return nil, nil, fmt.Errorf("custom_get_required_keys: %s", err)
 		}
 	} else {
-		resp, err := api.GetRequiredKeys(ctx, tx)
+		resp, err := api.GetRequiredKeys(tx)
 		if err != nil {
 			return nil, nil, fmt.Errorf("get_required_keys: %s", err)
 		}
 		requiredKeys = resp.RequiredKeys
 	}
 
-	signedTx, err := api.Signer.Sign(ctx, stx, chainID, requiredKeys...)
+	signedTx, err := api.Signer.Sign(stx, chainID, requiredKeys...)
 	if err != nil {
 		return nil, nil, fmt.Errorf("signing through wallet: %s", err)
 	}
@@ -381,22 +380,22 @@ func (api *API) SignTransaction(ctx context.Context, tx *Transaction, chainID Ch
 
 // PushTransaction submits a properly filled (tapos), packed and
 // signed transaction to the blockchain.
-func (api *API) PushTransaction(ctx context.Context, tx *PackedTransaction) (out *PushTransactionFullResp, err error) {
-	err = api.call(ctx, "chain", "push_transaction", tx, &out)
+func (api *API) PushTransaction(tx *PackedTransaction) (out *PushTransactionFullResp, err error) {
+	err = api.call("chain", "push_transaction", tx, &out)
 	return
 }
 
-func (api *API) PushTransactionRaw(ctx context.Context, tx *PackedTransaction) (out json.RawMessage, err error) {
-	err = api.call(ctx, "chain", "push_transaction", tx, &out)
+func (api *API) PushTransactionRaw(tx *PackedTransaction) (out json.RawMessage, err error) {
+	err = api.call("chain", "push_transaction", tx, &out)
 	return
 }
 
-func (api *API) GetInfo(ctx context.Context) (out *InfoResp, err error) {
-	err = api.call(ctx, "chain", "get_info", nil, &out)
+func (api *API) GetInfo() (out *InfoResp, err error) {
+	err = api.call("chain", "get_info", nil, &out)
 	return
 }
 
-func (api *API) cachedGetInfo(ctx context.Context) (*InfoResp, error) {
+func (api *API) cachedGetInfo() (*InfoResp, error) {
 	api.lastGetInfoLock.Lock()
 	defer api.lastGetInfoLock.Unlock()
 
@@ -406,7 +405,7 @@ func (api *API) cachedGetInfo(ctx context.Context) (*InfoResp, error) {
 	if !api.lastGetInfoStamp.IsZero() && time.Now().Add(-1*time.Second).Before(api.lastGetInfoStamp) {
 		info = api.lastGetInfo
 	} else {
-		info, err = api.GetInfo(ctx)
+		info, err = api.GetInfo()
 		if err != nil {
 			return nil, err
 		}
@@ -420,140 +419,140 @@ func (api *API) cachedGetInfo(ctx context.Context) (*InfoResp, error) {
 	return api.lastGetInfo, nil
 }
 
-func (api *API) GetNetConnections(ctx context.Context) (out []*NetConnectionsResp, err error) {
-	err = api.call(ctx, "net", "connections", nil, &out)
+func (api *API) GetNetConnections() (out []*NetConnectionsResp, err error) {
+	err = api.call("net", "connections", nil, &out)
 	return
 }
 
-func (api *API) NetConnect(ctx context.Context, host string) (out NetConnectResp, err error) {
-	err = api.call(ctx, "net", "connect", host, &out)
+func (api *API) NetConnect(host string) (out NetConnectResp, err error) {
+	err = api.call("net", "connect", host, &out)
 	return
 }
 
-func (api *API) NetDisconnect(ctx context.Context, host string) (out NetDisconnectResp, err error) {
-	err = api.call(ctx, "net", "disconnect", host, &out)
+func (api *API) NetDisconnect(host string) (out NetDisconnectResp, err error) {
+	err = api.call("net", "disconnect", host, &out)
 	return
 }
 
-func (api *API) GetNetStatus(ctx context.Context, host string) (out *NetStatusResp, err error) {
-	err = api.call(ctx, "net", "status", M{"host": host}, &out)
+func (api *API) GetNetStatus(host string) (out *NetStatusResp, err error) {
+	err = api.call("net", "status", M{"host": host}, &out)
 	return
 }
 
-func (api *API) GetBlockByID(ctx context.Context, id string) (out *BlockResp, err error) {
-	err = api.call(ctx, "chain", "get_block", M{"block_num_or_id": id}, &out)
+func (api *API) GetBlockByID(id string) (out *BlockResp, err error) {
+	err = api.call("chain", "get_block", M{"block_num_or_id": id}, &out)
 	return
 }
 
 // GetScheduledTransactionsWithBounds returns scheduled transactions within specified bounds
-func (api *API) GetScheduledTransactionsWithBounds(ctx context.Context, lower_bound string, limit uint32) (out *ScheduledTransactionsResp, err error) {
-	err = api.call(ctx, "chain", "get_scheduled_transactions", M{"json": true, "lower_bound": lower_bound, "limit": limit}, &out)
+func (api *API) GetScheduledTransactionsWithBounds(lower_bound string, limit uint32) (out *ScheduledTransactionsResp, err error) {
+	err = api.call("chain", "get_scheduled_transactions", M{"json": true, "lower_bound": lower_bound, "limit": limit}, &out)
 	return
 }
 
 // GetScheduledTransactions returns the Top 100 scheduled transactions
-func (api *API) GetScheduledTransactions(ctx context.Context) (out *ScheduledTransactionsResp, err error) {
-	return api.GetScheduledTransactionsWithBounds(ctx, "", 100)
+func (api *API) GetScheduledTransactions() (out *ScheduledTransactionsResp, err error) {
+	return api.GetScheduledTransactionsWithBounds("", 100)
 }
 
-func (api *API) GetProducers(ctx context.Context) (out *ProducersResp, err error) {
+func (api *API) GetProducers() (out *ProducersResp, err error) {
 	/*
 		+FC_REFLECT( eosio::chain_apis::read_only::get_producers_params, (json)(lower_bound)(limit) )
 		+FC_REFLECT( eosio::chain_apis::read_only::get_producers_result, (rows)(total_producer_vote_weight)(more) ); */
-	err = api.call(ctx, "chain", "get_producers", nil, &out)
+	err = api.call("chain", "get_producers", nil, &out)
 	return
 }
 
-func (api *API) GetBlockByNum(ctx context.Context, num uint32) (out *BlockResp, err error) {
-	err = api.call(ctx, "chain", "get_block", M{"block_num_or_id": fmt.Sprintf("%d", num)}, &out)
+func (api *API) GetBlockByNum(num uint32) (out *BlockResp, err error) {
+	err = api.call("chain", "get_block", M{"block_num_or_id": fmt.Sprintf("%d", num)}, &out)
 	//err = api.call("chain", "get_block", M{"block_num_or_id": num}, &out)
 	return
 }
 
-func (api *API) GetBlockByNumOrID(ctx context.Context, query string) (out *SignedBlock, err error) {
-	err = api.call(ctx, "chain", "get_block", M{"block_num_or_id": query}, &out)
+func (api *API) GetBlockByNumOrID(query string) (out *SignedBlock, err error) {
+	err = api.call("chain", "get_block", M{"block_num_or_id": query}, &out)
 	return
 }
 
-func (api *API) GetBlockByNumOrIDRaw(ctx context.Context, query string) (out interface{}, err error) {
-	err = api.call(ctx, "chain", "get_block", M{"block_num_or_id": query}, &out)
+func (api *API) GetBlockByNumOrIDRaw(query string) (out interface{}, err error) {
+	err = api.call("chain", "get_block", M{"block_num_or_id": query}, &out)
 	return
 }
 
-func (api *API) GetDBSize(ctx context.Context) (out *DBSizeResp, err error) {
-	err = api.call(ctx, "db_size", "get", nil, &out)
+func (api *API) GetDBSize() (out *DBSizeResp, err error) {
+	err = api.call("db_size", "get", nil, &out)
 	return
 }
 
-func (api *API) GetTransaction(ctx context.Context, id string) (out *TransactionResp, err error) {
-	err = api.call(ctx, "history", "get_transaction", M{"id": id}, &out)
+func (api *API) GetTransaction(id string) (out *TransactionResp, err error) {
+	err = api.call("history", "get_transaction", M{"id": id}, &out)
 	return
 }
 
-func (api *API) GetTransactionRaw(ctx context.Context, id string) (out json.RawMessage, err error) {
-	err = api.call(ctx, "history", "get_transaction", M{"id": id}, &out)
+func (api *API) GetTransactionRaw(id string) (out json.RawMessage, err error) {
+	err = api.call("history", "get_transaction", M{"id": id}, &out)
 	return
 }
 
-func (api *API) GetActions(ctx context.Context, params GetActionsRequest) (out *ActionsResp, err error) {
-	err = api.call(ctx, "history", "get_actions", params, &out)
+func (api *API) GetActions(params GetActionsRequest) (out *ActionsResp, err error) {
+	err = api.call("history", "get_actions", params, &out)
 	return
 }
 
-func (api *API) GetKeyAccounts(ctx context.Context, publicKey string) (out *KeyAccountsResp, err error) {
-	err = api.call(ctx, "history", "get_key_accounts", M{"public_key": publicKey}, &out)
+func (api *API) GetKeyAccounts(publicKey string) (out *KeyAccountsResp, err error) {
+	err = api.call("history", "get_key_accounts", M{"public_key": publicKey}, &out)
 	return
 }
 
-func (api *API) GetControlledAccounts(ctx context.Context, controllingAccount string) (out *ControlledAccountsResp, err error) {
-	err = api.call(ctx, "history", "get_controlled_accounts", M{"controlling_account": controllingAccount}, &out)
+func (api *API) GetControlledAccounts(controllingAccount string) (out *ControlledAccountsResp, err error) {
+	err = api.call("history", "get_controlled_accounts", M{"controlling_account": controllingAccount}, &out)
 	return
 }
 
-func (api *API) GetTransactions(ctx context.Context, name AccountName) (out *TransactionsResp, err error) {
-	err = api.call(ctx, "account_history", "get_transactions", M{"account_name": name}, &out)
+func (api *API) GetTransactions(name AccountName) (out *TransactionsResp, err error) {
+	err = api.call("account_history", "get_transactions", M{"account_name": name}, &out)
 	return
 }
 
-func (api *API) GetTableByScope(ctx context.Context, params GetTableByScopeRequest) (out *GetTableByScopeResp, err error) {
-	err = api.call(ctx, "chain", "get_table_by_scope", params, &out)
+func (api *API) GetTableByScope(params GetTableByScopeRequest) (out *GetTableByScopeResp, err error) {
+	err = api.call("chain", "get_table_by_scope", params, &out)
 	return
 }
 
-func (api *API) GetTableRows(ctx context.Context, params GetTableRowsRequest) (out *GetTableRowsResp, err error) {
-	err = api.call(ctx, "chain", "get_table_rows", params, &out)
+func (api *API) GetTableRows(params GetTableRowsRequest) (out *GetTableRowsResp, err error) {
+	err = api.call("chain", "get_table_rows", params, &out)
 	return
 }
 
-func (api *API) GetRawABI(ctx context.Context, params GetRawABIRequest) (out *GetRawABIResp, err error) {
-	err = api.call(ctx, "chain", "get_raw_abi", params, &out)
+func (api *API) GetRawABI(params GetRawABIRequest) (out *GetRawABIResp, err error) {
+	err = api.call("chain", "get_raw_abi", params, &out)
 	return
 }
 
-func (api *API) GetRequiredKeys(ctx context.Context, tx *Transaction) (out *GetRequiredKeysResp, err error) {
-	keys, err := api.Signer.AvailableKeys(ctx)
+func (api *API) GetRequiredKeys(tx *Transaction) (out *GetRequiredKeysResp, err error) {
+	keys, err := api.Signer.AvailableKeys()
 	if err != nil {
 		return nil, err
 	}
 
-	err = api.call(ctx, "chain", "get_required_keys", M{"transaction": tx, "available_keys": keys}, &out)
+	err = api.call("chain", "get_required_keys", M{"transaction": tx, "available_keys": keys}, &out)
 	return
 }
 
-func (api *API) GetCurrencyBalance(ctx context.Context, account AccountName, symbol string, code AccountName) (out []Asset, err error) {
+func (api *API) GetCurrencyBalance(account AccountName, symbol string, code AccountName) (out []Asset, err error) {
 	params := M{"account": account, "code": code}
 	if symbol != "" {
 		params["symbol"] = symbol
 	}
-	err = api.call(ctx, "chain", "get_currency_balance", params, &out)
+	err = api.call("chain", "get_currency_balance", params, &out)
 	return
 }
 
-func (api *API) GetCurrencyStats(ctx context.Context, code AccountName, symbol string) (out *GetCurrencyStatsResp, err error) {
+func (api *API) GetCurrencyStats(code AccountName, symbol string) (out *GetCurrencyStatsResp, err error) {
 	params := M{"code": code, "symbol": symbol}
 
 	outWrapper := make(map[string]*GetCurrencyStatsResp)
-	err = api.call(ctx, "chain", "get_currency_stats", params, &outWrapper)
+	err = api.call("chain", "get_currency_stats", params, &outWrapper)
 	out = outWrapper[symbol]
 
 	return
@@ -561,7 +560,7 @@ func (api *API) GetCurrencyStats(ctx context.Context, code AccountName, symbol s
 
 // See more here: libraries/chain/contracts/abi_serializer.cpp:58...
 
-func (api *API) call(ctx context.Context, baseAPI string, endpoint string, body interface{}, out interface{}) error {
+func (api *API) call(baseAPI string, endpoint string, body interface{}, out interface{}) error {
 	jsonBody, err := enc(body)
 	if err != nil {
 		return err
@@ -591,7 +590,7 @@ func (api *API) call(ctx context.Context, baseAPI string, endpoint string, body 
 		fmt.Println("")
 	}
 
-	resp, err := api.HttpClient.Do(req.WithContext(ctx))
+	resp, err := api.HttpClient.Do(req)
 	if err != nil {
 		return fmt.Errorf("%s: %s", req.URL.String(), err)
 	}

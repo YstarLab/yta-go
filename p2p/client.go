@@ -9,7 +9,7 @@ import (
 
 	"time"
 
-	"github.com/eoscanada/eos-go"
+	"github.com/YstarLab/yta-go"
 )
 
 type Client struct {
@@ -61,10 +61,10 @@ func (c *Client) read(peer *Peer, errChannel chan error) {
 		}
 
 		switch m := packet.P2PMessage.(type) {
-		case *eos.GoAwayMessage:
+		case *yta.GoAwayMessage:
 			errChannel <- errors.Wrapf(err, "GoAwayMessage reason %s", m.Reason)
 
-		case *eos.HandshakeMessage:
+		case *yta.HandshakeMessage:
 			if c.catchup == nil {
 				m.NodeID = peer.NodeID
 				m.P2PAddress = peer.Name
@@ -84,7 +84,7 @@ func (c *Client) read(peer *Peer, errChannel chan error) {
 				}
 				c.catchup.IsCatchingUp = true
 			}
-		case *eos.NoticeMessage:
+		case *yta.NoticeMessage:
 			if c.catchup != nil {
 				pendingNum := m.KnownBlocks.Pending
 				if pendingNum > 0 {
@@ -95,7 +95,7 @@ func (c *Client) read(peer *Peer, errChannel chan error) {
 					}
 				}
 			}
-		case *eos.SignedBlock:
+		case *yta.SignedBlock:
 
 			if c.catchup != nil {
 

@@ -1,20 +1,19 @@
 package eos_test
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 func ExampleAPI_GetAccount() {
-	api := eos.New(getAPIURL())
+	api := yta.New(getAPIURL())
 
-	account := eos.AccountName("eos.rex")
-	info, err := api.GetAccount(context.Background(), account)
+	account := yta.AccountName("yta.rex")
+	info, err := api.GetAccount(account)
 	if err != nil {
-		if err == eos.ErrNotFound {
+		if err == yta.ErrNotFound {
 			fmt.Printf("unknown account: %s", account)
 			return
 		}

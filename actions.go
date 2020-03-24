@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"bytes"
@@ -52,7 +52,7 @@ func (a Action) Digest() Checksum256 {
 
 type ActionData struct {
 	HexData  HexBytes    `json:"hex_data,omitempty"`
-	Data     interface{} `json:"data,omitempty" eos:"-"`
+	Data     interface{} `json:"data,omitempty" yta:"-"`
 	abi      []byte      // TBD: we could use the ABI to decode in obj
 	toServer bool
 }

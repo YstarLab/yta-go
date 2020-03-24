@@ -1,22 +1,22 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewCancelREXOrder(owner eos.AccountName) *eos.Action {
-	return &eos.Action{
+func NewCancelREXOrder(owner yta.AccountName) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("cnclrexorder"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: owner, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: owner, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(CancelREXOrder{
+		ActionData: yta.NewActionData(CancelREXOrder{
 			Owner: owner,
 		}),
 	}
 }
 
 type CancelREXOrder struct {
-	Owner eos.AccountName
+	Owner yta.AccountName
 }

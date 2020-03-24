@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"os"
@@ -8,7 +8,11 @@ import (
 
 func init() {
 	if os.Getenv("DEBUG") != "" {
-		logger, _ := zap.NewDevelopment()
-		EnableDebugLogging(logger)
+		coreLog, _ = zap.NewDevelopment()
+		encoderLog, _ = zap.NewDevelopment()
+		decoderLog, _ = zap.NewDevelopment()
+		abiEncoderLog, _ = zap.NewDevelopment()
+		abiDecoderLog, _ = zap.NewDevelopment()
+		loggingEnabled = true
 	}
 }

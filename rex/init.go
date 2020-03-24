@@ -1,30 +1,30 @@
 package rex
 
-import eos "github.com/eoscanada/eos-go"
+import yta "github.com/YstarLab/yta-go"
 
 func init() {
-	eos.RegisterAction(REXAN, ActN("buyrex"), BuyREX{})
-	eos.RegisterAction(REXAN, ActN("closerex"), CloseREX{})
-	eos.RegisterAction(REXAN, ActN("cnclrexorder"), CancelREXOrder{})
-	eos.RegisterAction(REXAN, ActN("consolidate"), Consolidate{})
-	eos.RegisterAction(REXAN, ActN("defcpuloan"), DefundCPULoan{})
-	eos.RegisterAction(REXAN, ActN("defnetloan"), DefundNetLoan{})
-	eos.RegisterAction(REXAN, ActN("deposit"), Deposit{})
-	eos.RegisterAction(REXAN, ActN("fundcpuloan"), FundCPULoan{})
-	eos.RegisterAction(REXAN, ActN("fundnetloan"), FundNetLoan{})
-	eos.RegisterAction(REXAN, ActN("mvfrsavings"), MoveFromSavings{})
-	eos.RegisterAction(REXAN, ActN("mvtosavings"), MoveToSavings{})
-	eos.RegisterAction(REXAN, ActN("rentcpu"), RentCPU{})
-	eos.RegisterAction(REXAN, ActN("rentnet"), RentNet{})
-	eos.RegisterAction(REXAN, ActN("rexexec"), REXExec{})
-	eos.RegisterAction(REXAN, ActN("sellrex"), SellREX{})
-	eos.RegisterAction(REXAN, ActN("unstaketorex"), UnstakeToREX{})
-	eos.RegisterAction(REXAN, ActN("updaterex"), UpdateREX{})
-	eos.RegisterAction(REXAN, ActN("withdraw"), Withdraw{})
+	yta.RegisterAction(REXAN, ActN("buyrex"), BuyREX{})
+	yta.RegisterAction(REXAN, ActN("closerex"), CloseREX{})
+	yta.RegisterAction(REXAN, ActN("cnclrexorder"), CancelREXOrder{})
+	yta.RegisterAction(REXAN, ActN("consolidate"), Consolidate{})
+	yta.RegisterAction(REXAN, ActN("defcpuloan"), DefundCPULoan{})
+	yta.RegisterAction(REXAN, ActN("defnetloan"), DefundNetLoan{})
+	yta.RegisterAction(REXAN, ActN("deposit"), Deposit{})
+	yta.RegisterAction(REXAN, ActN("fundcpuloan"), FundCPULoan{})
+	yta.RegisterAction(REXAN, ActN("fundnetloan"), FundNetLoan{})
+	yta.RegisterAction(REXAN, ActN("mvfrsavings"), MoveFromSavings{})
+	yta.RegisterAction(REXAN, ActN("mvtosavings"), MoveToSavings{})
+	yta.RegisterAction(REXAN, ActN("rentcpu"), RentCPU{})
+	yta.RegisterAction(REXAN, ActN("rentnet"), RentNet{})
+	yta.RegisterAction(REXAN, ActN("rexexec"), REXExec{})
+	yta.RegisterAction(REXAN, ActN("sellrex"), SellREX{})
+	yta.RegisterAction(REXAN, ActN("unstaketorex"), UnstakeToREX{})
+	yta.RegisterAction(REXAN, ActN("updaterex"), UpdateREX{})
+	yta.RegisterAction(REXAN, ActN("withdraw"), Withdraw{})
 }
 
-var AN = eos.AN
-var PN = eos.PN
-var ActN = eos.ActN
+var AN = yta.AN
+var PN = yta.PN
+var ActN = yta.ActN
 
 var REXAN = AN("eosio")

@@ -1,4 +1,4 @@
-module github.com/eoscanada/eos-go
+module github.com/YstarLab/yta-go
 
 go 1.13
 

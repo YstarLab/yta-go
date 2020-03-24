@@ -1,20 +1,20 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewSetRAMRate(bytesPerBlock uint16) *eos.Action {
-	a := &eos.Action{
+func NewSetRAMRate(bytesPerBlock uint16) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("setram"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{
 				Actor:      AN("eosio"),
-				Permission: eos.PermissionName("active"),
+				Permission: yta.PermissionName("active"),
 			},
 		},
-		ActionData: eos.NewActionData(SetRAMRate{
+		ActionData: yta.NewActionData(SetRAMRate{
 			BytesPerBlock: bytesPerBlock,
 		}),
 	}

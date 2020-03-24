@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"encoding/binary"
@@ -87,7 +87,7 @@ type Packet struct {
 	Length     uint32         `json:"length"`
 	Type       P2PMessageType `json:"type"`
 	Payload    []byte         `json:"-"`
-	P2PMessage P2PMessage     `json:"message" eos:"-"`
+	P2PMessage P2PMessage     `json:"message" yta:"-"`
 	Raw        []byte         `json:"-"`
 }
 

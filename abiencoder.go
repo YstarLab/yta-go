@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 	"go.uber.org/zap"
 
 	"github.com/tidwall/gjson"
@@ -317,7 +317,7 @@ func (a *ABI) writeField(binaryEncoder *Encoder, fieldName string, fieldType str
 	case "symbol":
 		parts := strings.Split(value.Str, ",")
 		if len(parts) != 2 {
-			return fmt.Errorf("writing field: symbol: symbol should be of format '4,EOS'")
+			return fmt.Errorf("writing field: symbol: symbol should be of format '4,YTA'")
 		}
 
 		i, err := strconv.ParseUint(parts[0], 10, 8)

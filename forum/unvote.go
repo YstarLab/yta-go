@@ -1,18 +1,18 @@
 package forum
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 // NewUnVote is an action representing the action to undoing a current vote
-func NewUnVote(voter eos.AccountName, proposalName eos.Name) *eos.Action {
-	a := &eos.Action{
+func NewUnVote(voter yta.AccountName, proposalName yta.Name) *yta.Action {
+	a := &yta.Action{
 		Account: ForumAN,
 		Name:    ActN("unvote"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: voter, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: voter, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(UnVote{
+		ActionData: yta.NewActionData(UnVote{
 			Voter:        voter,
 			ProposalName: proposalName,
 		}),
@@ -22,6 +22,6 @@ func NewUnVote(voter eos.AccountName, proposalName eos.Name) *eos.Action {
 
 // UnVote represents the `eosio.forum::unvote` action.
 type UnVote struct {
-	Voter        eos.AccountName `json:"voter"`
-	ProposalName eos.Name        `json:"proposal_name"`
+	Voter        yta.AccountName `json:"voter"`
+	ProposalName yta.Name        `json:"proposal_name"`
 }

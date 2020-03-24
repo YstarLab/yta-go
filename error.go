@@ -1,10 +1,10 @@
-package eos
+package yta
 
 import (
 	"fmt"
 	"strings"
 
-	"github.com/eoscanada/eos-go/eoserr"
+	"github.com/YstarLab/yta-go/eoserr"
 )
 
 // APIError represents the errors as reported by the server
@@ -72,7 +72,7 @@ func (e APIError) Error() string {
 //  		"what": "unspecified",
 //  		"details": [
 //		 		{
-//		 			"message": "unknown key (<... redacted ...>): (0 eos.rex)",
+//		 			"message": "unknown key (<... redacted ...>): (0 yta.rex)",
 //		 			"file": "http_plugin.cpp",
 //		 			"line_number": 589,
 //		 			"method": "handle_exception"

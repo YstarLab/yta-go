@@ -1,17 +1,17 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewFundCPULoan(from eos.AccountName, loanNumber uint64, payment eos.Asset) *eos.Action {
-	return &eos.Action{
+func NewFundCPULoan(from yta.AccountName, loanNumber uint64, payment yta.Asset) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("fundcpuloan"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: from, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: from, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(FundCPULoan{
+		ActionData: yta.NewActionData(FundCPULoan{
 			From:       from,
 			LoanNumber: loanNumber,
 			Payment:    payment,
@@ -20,7 +20,7 @@ func NewFundCPULoan(from eos.AccountName, loanNumber uint64, payment eos.Asset) 
 }
 
 type FundCPULoan struct {
-	From       eos.AccountName
+	From       yta.AccountName
 	LoanNumber uint64
-	Payment    eos.Asset
+	Payment    yta.Asset
 }

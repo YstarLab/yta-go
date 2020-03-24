@@ -1,19 +1,19 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 // NewClaimRewards will buy at current market price a given number of
 // bytes of RAM, and grant them to the `receiver` account.
-func NewClaimRewards(owner eos.AccountName) *eos.Action {
-	a := &eos.Action{
+func NewClaimRewards(owner yta.AccountName) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("claimrewards"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: owner, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: owner, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(ClaimRewards{
+		ActionData: yta.NewActionData(ClaimRewards{
 			Owner: owner,
 		}),
 	}
@@ -22,5 +22,5 @@ func NewClaimRewards(owner eos.AccountName) *eos.Action {
 
 // ClaimRewards represents the `eosio.system::claimrewards` action.
 type ClaimRewards struct {
-	Owner eos.AccountName `json:"owner"`
+	Owner yta.AccountName `json:"owner"`
 }

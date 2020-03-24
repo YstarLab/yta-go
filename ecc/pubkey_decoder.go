@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/eoscanada/eos-go/btcsuite/btcutil/base58"
+	"github.com/YstarLab/yta-go/btcsuite/btcutil/base58"
 )
 
 var keyMaterialDecoders = map[CurveID]keyMaterialDecoder{
@@ -32,7 +32,7 @@ func decodeKeyMaterial(input string, curve CurveID) (result []byte, err error) {
 	if bytes.Compare(ripemd160checksum(decoded[:len(decoded)-4], curve), cksum[:]) != 0 {
 		return nil, fmt.Errorf("invalid checksum")
 	}
-	// perhaps bitcoin has a leading net ID / version, but EOS doesn't
+	// perhaps bitcoin has a leading net ID / version, but YTA doesn't
 	payload := decoded[:len(decoded)-4]
 	result = append(result, payload...)
 	return

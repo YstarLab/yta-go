@@ -1,41 +1,41 @@
 package system
 
 import (
-	"github.com/eoscanada/eos-go"
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go"
+	"github.com/YstarLab/yta-go/ecc"
 )
 
 // NewNewAccount returns a `newaccount` action that lives on the
 // `eosio.system` contract.
-func NewNewAccount(creator, newAccount eos.AccountName, publicKey ecc.PublicKey) *eos.Action {
-	return &eos.Action{
+func NewNewAccount(creator, newAccount yta.AccountName, publicKey ecc.PublicKey) *yta.Action {
+	return &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("newaccount"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: creator, Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(NewAccount{
+		ActionData: yta.NewActionData(NewAccount{
 			Creator: creator,
 			Name:    newAccount,
-			Owner: eos.Authority{
+			Owner: yta.Authority{
 				Threshold: 1,
-				Keys: []eos.KeyWeight{
+				Keys: []yta.KeyWeight{
 					{
 						PublicKey: publicKey,
 						Weight:    1,
 					},
 				},
-				Accounts: []eos.PermissionLevelWeight{},
+				Accounts: []yta.PermissionLevelWeight{},
 			},
-			Active: eos.Authority{
+			Active: yta.Authority{
 				Threshold: 1,
-				Keys: []eos.KeyWeight{
+				Keys: []yta.KeyWeight{
 					{
 						PublicKey: publicKey,
 						Weight:    1,
 					},
 				},
-				Accounts: []eos.PermissionLevelWeight{},
+				Accounts: []yta.PermissionLevelWeight{},
 			},
 		}),
 	}
@@ -44,22 +44,22 @@ func NewNewAccount(creator, newAccount eos.AccountName, publicKey ecc.PublicKey)
 // NewDelegatedNewAccount returns a `newaccount` action that lives on the
 // `eosio.system` contract. It is filled with an authority structure that
 // delegates full control of the new account to an already existing account.
-func NewDelegatedNewAccount(creator, newAccount eos.AccountName, delegatedTo eos.AccountName) *eos.Action {
-	return &eos.Action{
+func NewDelegatedNewAccount(creator, newAccount yta.AccountName, delegatedTo yta.AccountName) *yta.Action {
+	return &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("newaccount"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: creator, Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(NewAccount{
+		ActionData: yta.NewActionData(NewAccount{
 			Creator: creator,
 			Name:    newAccount,
-			Owner: eos.Authority{
+			Owner: yta.Authority{
 				Threshold: 1,
-				Keys:      []eos.KeyWeight{},
-				Accounts: []eos.PermissionLevelWeight{
-					eos.PermissionLevelWeight{
-						Permission: eos.PermissionLevel{
+				Keys:      []yta.KeyWeight{},
+				Accounts: []yta.PermissionLevelWeight{
+					yta.PermissionLevelWeight{
+						Permission: yta.PermissionLevel{
 							Actor:      delegatedTo,
 							Permission: PN("active"),
 						},
@@ -67,12 +67,12 @@ func NewDelegatedNewAccount(creator, newAccount eos.AccountName, delegatedTo eos
 					},
 				},
 			},
-			Active: eos.Authority{
+			Active: yta.Authority{
 				Threshold: 1,
-				Keys:      []eos.KeyWeight{},
-				Accounts: []eos.PermissionLevelWeight{
-					eos.PermissionLevelWeight{
-						Permission: eos.PermissionLevel{
+				Keys:      []yta.KeyWeight{},
+				Accounts: []yta.PermissionLevelWeight{
+					yta.PermissionLevelWeight{
+						Permission: yta.PermissionLevel{
 							Actor:      delegatedTo,
 							Permission: PN("active"),
 						},
@@ -87,14 +87,14 @@ func NewDelegatedNewAccount(creator, newAccount eos.AccountName, delegatedTo eos
 // NewCustomNewAccount returns a `newaccount` action that lives on the
 // `eosio.system` contract. You can specify your own `owner` and
 // `active` permissions.
-func NewCustomNewAccount(creator, newAccount eos.AccountName, owner, active eos.Authority) *eos.Action {
-	return &eos.Action{
+func NewCustomNewAccount(creator, newAccount yta.AccountName, owner, active yta.Authority) *yta.Action {
+	return &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("newaccount"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: creator, Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(NewAccount{
+		ActionData: yta.NewActionData(NewAccount{
 			Creator: creator,
 			Name:    newAccount,
 			Owner:   owner,
@@ -107,8 +107,8 @@ func NewCustomNewAccount(creator, newAccount eos.AccountName, owner, active eos.
 // contract. It is one of the rare ones to be hard-coded into the
 // blockchain.
 type NewAccount struct {
-	Creator eos.AccountName `json:"creator"`
-	Name    eos.AccountName `json:"name"`
-	Owner   eos.Authority   `json:"owner"`
-	Active  eos.Authority   `json:"active"`
+	Creator yta.AccountName `json:"creator"`
+	Name    yta.AccountName `json:"name"`
+	Owner   yta.Authority   `json:"owner"`
+	Active  yta.Authority   `json:"active"`
 }

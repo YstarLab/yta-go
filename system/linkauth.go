@@ -1,6 +1,6 @@
 package system
 
-import "github.com/eoscanada/eos-go"
+import "github.com/YstarLab/yta-go"
 
 // NewLinkAuth creates an action from the `eosio.system` contract
 // called `linkauth`.
@@ -10,17 +10,17 @@ import "github.com/eoscanada/eos-go"
 // `requiredPermission` to sign transactions for `code::actionName`
 // and not rely on your `active` (which might be more sensitive as it
 // can sign anything) for the given operation.
-func NewLinkAuth(account, code eos.AccountName, actionName eos.ActionName, requiredPermission eos.PermissionName) *eos.Action {
-	a := &eos.Action{
+func NewLinkAuth(account, code yta.AccountName, actionName yta.ActionName, requiredPermission yta.PermissionName) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("linkauth"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{
 				Actor:      account,
-				Permission: eos.PermissionName("active"),
+				Permission: yta.PermissionName("active"),
 			},
 		},
-		ActionData: eos.NewActionData(LinkAuth{
+		ActionData: yta.NewActionData(LinkAuth{
 			Account:     account,
 			Code:        code,
 			Type:        actionName,
@@ -34,8 +34,8 @@ func NewLinkAuth(account, code eos.AccountName, actionName eos.ActionName, requi
 // LinkAuth represents the native `linkauth` action, through the
 // system contract.
 type LinkAuth struct {
-	Account     eos.AccountName    `json:"account"`
-	Code        eos.AccountName    `json:"code"`
-	Type        eos.ActionName     `json:"type"`
-	Requirement eos.PermissionName `json:"requirement"`
+	Account     yta.AccountName    `json:"account"`
+	Code        yta.AccountName    `json:"code"`
+	Type        yta.ActionName     `json:"type"`
+	Requirement yta.PermissionName `json:"requirement"`
 }

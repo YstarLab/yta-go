@@ -1,21 +1,21 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewSetRAM(maxRAMSize uint64) *eos.Action {
-	a := &eos.Action{
+func NewSetRAM(maxRAMSize uint64) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("setram"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{
 				Actor:      AN("eosio"),
-				Permission: eos.PermissionName("active"),
+				Permission: yta.PermissionName("active"),
 			},
 		},
-		ActionData: eos.NewActionData(SetRAM{
-			MaxRAMSize: eos.Uint64(maxRAMSize),
+		ActionData: yta.NewActionData(SetRAM{
+			MaxRAMSize: yta.Uint64(maxRAMSize),
 		}),
 	}
 	return a
@@ -23,5 +23,5 @@ func NewSetRAM(maxRAMSize uint64) *eos.Action {
 
 // SetRAM represents the hard-coded `setram` action.
 type SetRAM struct {
-	MaxRAMSize eos.Uint64 `json:"max_ram_size"`
+	MaxRAMSize yta.Uint64 `json:"max_ram_size"`
 }

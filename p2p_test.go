@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -348,7 +348,7 @@ func TestBlockHeader_UnmarshalJSON(t *testing.T) {
 				assert.Nil(t, e.NewProducersV1)
 				assert.Len(t, e.HeaderExtensions, 1)
 
-				extension, err := e.HeaderExtensions[0].AsBlockHeaderExtension("EOS")
+				extension, err := e.HeaderExtensions[0].AsBlockHeaderExtension("YTA")
 				require.NoError(t, err)
 				assert.NotNil(t, extension)
 				assert.IsType(t, &ProducerScheduleChangeExtension{}, extension)
@@ -418,7 +418,7 @@ func checkProducerAuthoritySchedule(t *testing.T, schedule *ProducerAuthoritySch
 }
 
 func checkBlockSigningAuthority(t *testing.T, authority *BlockSigningAuthority) {
-	assert.Equal(t, uint32(0), authority.TypeID)
+	assert.Equal(t, uint(0), authority.TypeID)
 	switch v0 := authority.Impl.(type) {
 	case *BlockSigningAuthorityV0:
 		assert.Equal(t, uint32(2), v0.Threshold)

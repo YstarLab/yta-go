@@ -1,22 +1,22 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewUpdateREX(owner eos.AccountName) *eos.Action {
-	return &eos.Action{
+func NewUpdateREX(owner yta.AccountName) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("updaterex"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: owner, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: owner, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(UpdateREX{
+		ActionData: yta.NewActionData(UpdateREX{
 			Owner: owner,
 		}),
 	}
 }
 
 type UpdateREX struct {
-	Owner eos.AccountName
+	Owner yta.AccountName
 }

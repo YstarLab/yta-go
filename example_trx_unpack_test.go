@@ -4,17 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 func ExamplePackedTransaction_Unpack() {
-	var packedTrx *eos.PackedTransaction
+	var packedTrx *yta.PackedTransaction
 	err := json.Unmarshal(packedTrxData(), &packedTrx)
 	if err != nil {
 		panic(fmt.Errorf("unmarshaling to PackedTransaction: %s", err))
 	}
 
-	var signedTrx *eos.SignedTransaction
+	var signedTrx *yta.SignedTransaction
 	signedTrx, err = packedTrx.Unpack()
 	if err != nil {
 		panic(fmt.Errorf("unpacking transaction: %s", err))

@@ -1,15 +1,15 @@
 package token
 
-import eos "github.com/eoscanada/eos-go"
+import yta "github.com/YstarLab/yta-go"
 
-func NewTransfer(from, to eos.AccountName, quantity eos.Asset, memo string) *eos.Action {
-	return &eos.Action{
+func NewTransfer(from, to yta.AccountName, quantity yta.Asset, memo string) *yta.Action {
+	return &yta.Action{
 		Account: AN("eosio.token"),
 		Name:    ActN("transfer"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: from, Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(Transfer{
+		ActionData: yta.NewActionData(Transfer{
 			From:     from,
 			To:       to,
 			Quantity: quantity,
@@ -20,8 +20,8 @@ func NewTransfer(from, to eos.AccountName, quantity eos.Asset, memo string) *eos
 
 // Transfer represents the `transfer` struct on `eosio.token` contract.
 type Transfer struct {
-	From     eos.AccountName `json:"from"`
-	To       eos.AccountName `json:"to"`
-	Quantity eos.Asset       `json:"quantity"`
+	From     yta.AccountName `json:"from"`
+	To       yta.AccountName `json:"to"`
+	Quantity yta.Asset       `json:"quantity"`
 	Memo     string          `json:"memo"`
 }

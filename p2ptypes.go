@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"crypto/sha256"
@@ -9,7 +9,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 	"github.com/tidwall/gjson"
 )
 
@@ -283,7 +283,7 @@ func (p *ProducerScheduleOrAuthoritySchedule) UnmarshalJSON(data []byte) error {
 	}
 
 	// We cannot infer anything, what should we do exactly? We could populate the two, but
-	// what happens on marshal? Both are defined, that's what we choose for now, `eos-go` user
+	// what happens on marshal? Both are defined, that's what we choose for now, `yta-go` user
 	// would then make the choice themselves.
 	if len(producersResult.Array()) == 0 || producersResult.Get("0.block_signing_key").Exists() {
 		p.V1 = new(ProducerSchedule)
@@ -317,7 +317,7 @@ type BlockSigningAuthority struct {
 	BaseVariant
 }
 
-var blockSigningVariantFactoryImplMap = map[uint32]VariantImplFactory{
+var blockSigningVariantFactoryImplMap = map[uint]VariantImplFactory{
 	BlockSigningAuthorityV0Type: func() interface{} { return new(BlockSigningAuthorityV0) },
 }
 
@@ -351,7 +351,7 @@ type BlockHeader struct {
 	ScheduleVersion  uint32         `json:"schedule_version"`
 
 	// EOSIO 1.x
-	NewProducersV1 *ProducerSchedule `json:"new_producers,omitempty" eos:"optional"`
+	NewProducersV1 *ProducerSchedule `json:"new_producers,omitempty" yta:"optional"`
 
 	HeaderExtensions []*Extension `json:"header_extensions"`
 }

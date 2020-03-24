@@ -1,22 +1,22 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 func NewRentCPU(
-	from eos.AccountName,
-	receiver eos.AccountName,
-	loanPayment eos.Asset,
-	loanFund eos.Asset,
-) *eos.Action {
-	return &eos.Action{
+	from yta.AccountName,
+	receiver yta.AccountName,
+	loanPayment yta.Asset,
+	loanFund yta.Asset,
+) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("rentcpu"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: from, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: from, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(RentCPU{
+		ActionData: yta.NewActionData(RentCPU{
 			From:        from,
 			Receiver:    receiver,
 			LoanPayment: loanPayment,
@@ -26,8 +26,8 @@ func NewRentCPU(
 }
 
 type RentCPU struct {
-	From        eos.AccountName
-	Receiver    eos.AccountName
-	LoanPayment eos.Asset
-	LoanFund    eos.Asset
+	From        yta.AccountName
+	Receiver    yta.AccountName
+	LoanPayment yta.Asset
+	LoanFund    yta.Asset
 }

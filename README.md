@@ -1,12 +1,12 @@
-EOS.IO API library for Go
+YTA.IO API library for Go
 =========================
 
 [点击查看中文版](./README-cn.md)
 
-[![GoDoc](https://godoc.org/github.com/eoscanada/eos-go?status.svg)](https://godoc.org/github.com/eoscanada/eos-go)
+[![GoDoc](https://godoc.org/github.com/YstarLab/yta-go?status.svg)](https://godoc.org/github.com/YstarLab/yta-go)
 
 This library provides simple access to data structures (binary packing
-and JSON interface) and API calls to an EOS.IO RPC server, running
+and JSON interface) and API calls to an YTA.IO RPC server, running
 remotely or locally.  It provides wallet functionalities (KeyBag), or
 can sign transaction through the `keosd` wallet. It also knows about
 the P2P protocol on port 9876.
@@ -15,24 +15,24 @@ As of before the June launch, this library is pretty much in
 flux. Don't expect stability, as we're moving alongside the main
 `eosio` codebase, which changes very fast.
 
-This library is the basis for the `eos-bios` launch orchestrator tool
-at https://github.com/eoscanada/eos-bios
+This library is the basis for the `yta-bios` launch orchestrator tool
+at https://github.com/YstarLab/yta-bios
 
 
 Basic usage
 -----------
 
 ```go
-api := eos.New("http://testnet1.eos.io")
+api := yta.New("http://testnet1.yta.io")
 
-infoResp, _ := api.GetInfo(ctx)
-accountResp, _ := api.GetAccount(ctx, "initn")
+infoResp, _ := api.GetInfo()
+accountResp, _ := api.GetAccount("initn")
 fmt.Println("Permission for initn:", accountResp.Permissions[0].RequiredAuth.Keys)
 ```
 
 `eosio.system` and `eosio.token` contract _Actions_ are respectively in:
-* https://github.com/eoscanada/eos-go/tree/master/system ([godocs](https://godoc.org/github.com/eoscanada/eos-go/system))
-* https://github.com/eoscanada/eos-go/tree/master/token ([godocs](https://godoc.org/github.com/eoscanada/eos-go/token))
+* https://github.com/YstarLab/yta-go/tree/master/system ([godocs](https://godoc.org/github.com/YstarLab/yta-go/system))
+* https://github.com/YstarLab/yta-go/tree/master/token ([godocs](https://godoc.org/github.com/YstarLab/yta-go/token))
 
 Binaries
 --------
@@ -86,8 +86,8 @@ however.
 
 #### Environment Variables
 
-All examples uses by default the `https://mainnet.eos.dfuse.io` API endpoint for all
-HTTP communication and `peering.mainnet.eoscanada.com` for P2P communication.
+All examples uses by default the `https://mainnet.yta.dfuse.io` API endpoint for all
+HTTP communication and `peering.mainnet.YstarLab.com` for P2P communication.
 They can respectively be overridden by specifying environment variable
 `EOS_GO_API_URL` and `EOS_GO_P2P_ENDPOINT` respectively.
 

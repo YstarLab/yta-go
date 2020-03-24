@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"encoding/hex"
@@ -35,10 +35,6 @@ func (a *ABI) DecodeTableRow(tableName TableName, data []byte) ([]byte, error) {
 func (a *ABI) DecodeTableRowTyped(tableType string, data []byte) ([]byte, error) {
 	binaryDecoder := NewDecoder(data)
 	return a.decode(binaryDecoder, tableType)
-}
-
-func (a *ABI) Decode(binaryDecoder *Decoder, structName string) ([]byte, error) {
-	return a.decode(binaryDecoder, structName)
 }
 
 func (a *ABI) decode(binaryDecoder *Decoder, structName string) ([]byte, error) {

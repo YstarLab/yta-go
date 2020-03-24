@@ -1,17 +1,17 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewDeposit(owner eos.AccountName, amount eos.Asset) *eos.Action {
-	return &eos.Action{
+func NewDeposit(owner yta.AccountName, amount yta.Asset) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("deposit"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: owner, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: owner, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(Deposit{
+		ActionData: yta.NewActionData(Deposit{
 			Owner:  owner,
 			Amount: amount,
 		}),
@@ -19,6 +19,6 @@ func NewDeposit(owner eos.AccountName, amount eos.Asset) *eos.Action {
 }
 
 type Deposit struct {
-	Owner  eos.AccountName
-	Amount eos.Asset
+	Owner  yta.AccountName
+	Amount yta.Asset
 }

@@ -1,20 +1,20 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewBuyRAM(payer, receiver eos.AccountName, eosQuantity uint64) *eos.Action {
-	a := &eos.Action{
+func NewBuyRAM(payer, receiver yta.AccountName, eosQuantity uint64) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("buyram"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: payer, Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(BuyRAM{
+		ActionData: yta.NewActionData(BuyRAM{
 			Payer:    payer,
 			Receiver: receiver,
-			Quantity: eos.NewEOSAsset(int64(eosQuantity)),
+			Quantity: yta.NewEOSAsset(int64(eosQuantity)),
 		}),
 	}
 	return a
@@ -22,7 +22,7 @@ func NewBuyRAM(payer, receiver eos.AccountName, eosQuantity uint64) *eos.Action 
 
 // BuyRAM represents the `eosio.system::buyram` action.
 type BuyRAM struct {
-	Payer    eos.AccountName `json:"payer"`
-	Receiver eos.AccountName `json:"receiver"`
-	Quantity eos.Asset       `json:"quant"` // specified in EOS
+	Payer    yta.AccountName `json:"payer"`
+	Receiver yta.AccountName `json:"receiver"`
+	Quantity yta.Asset       `json:"quant"` // specified in YTA
 }

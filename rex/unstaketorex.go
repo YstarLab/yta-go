@@ -1,22 +1,22 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 func NewUnstakeToREX(
-	owner eos.AccountName,
-	receiver eos.AccountName,
-	fromNet eos.Asset,
-	fromCPU eos.Asset,
-) *eos.Action {
-	return &eos.Action{
+	owner yta.AccountName,
+	receiver yta.AccountName,
+	fromNet yta.Asset,
+	fromCPU yta.Asset,
+) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("unstaketorex"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: owner, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: owner, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(UnstakeToREX{
+		ActionData: yta.NewActionData(UnstakeToREX{
 			Owner:    owner,
 			Receiver: receiver,
 			FromNet:  fromNet,
@@ -26,8 +26,8 @@ func NewUnstakeToREX(
 }
 
 type UnstakeToREX struct {
-	Owner    eos.AccountName
-	Receiver eos.AccountName
-	FromNet  eos.Asset
-	FromCPU  eos.Asset
+	Owner    yta.AccountName
+	Receiver yta.AccountName
+	FromNet  yta.Asset
+	FromCPU  yta.Asset
 }

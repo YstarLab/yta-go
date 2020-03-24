@@ -1,19 +1,19 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
 // NewRegProxy returns a `regproxy` action that lives on the
 // `eosio.system` contract.
-func NewRegProxy(proxy eos.AccountName, isProxy bool) *eos.Action {
-	return &eos.Action{
+func NewRegProxy(proxy yta.AccountName, isProxy bool) *yta.Action {
+	return &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("regproxy"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: proxy, Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(RegProxy{
+		ActionData: yta.NewActionData(RegProxy{
 			Proxy:   proxy,
 			IsProxy: isProxy,
 		}),
@@ -22,6 +22,6 @@ func NewRegProxy(proxy eos.AccountName, isProxy bool) *eos.Action {
 
 // RegProxy represents the `eosio.system::regproxy` action
 type RegProxy struct {
-	Proxy   eos.AccountName `json:"proxy"`
+	Proxy   yta.AccountName `json:"proxy"`
 	IsProxy bool            `json:"isproxy"`
 }

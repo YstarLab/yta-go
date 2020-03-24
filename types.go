@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"encoding/base64"
@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 	"github.com/tidwall/gjson"
 )
 
@@ -374,9 +374,9 @@ func (sc SymbolCode) MarshalJSON() (data []byte, err error) {
 	return []byte(`"` + sc.String() + `"`), nil
 }
 
-// EOSSymbol represents the standard EOS symbol on the chain.  It's
+// EOSSymbol represents the standard YTA symbol on the chain.  It's
 // here just to speed up things.
-var EOSSymbol = Symbol{Precision: 4, Symbol: "EOS"}
+var EOSSymbol = Symbol{Precision: 4, Symbol: "YTA"}
 
 // REXSymbol represents the standard REX symbol on the chain.  It's
 // here just to speed up things.
@@ -386,14 +386,14 @@ func NewEOSAsset(amount int64) Asset {
 	return Asset{Amount: Int64(amount), Symbol: EOSSymbol}
 }
 
-// NewAsset reads from a string an EOS asset.
+// NewAsset reads from a string an YTA asset.
 //
 // Deprecated: Use `NewAssetFromString` instead
 func NewAsset(in string) (out Asset, err error) {
 	return NewAssetFromString(in)
 }
 
-// NewAssetFromString reads a string an decode it to an eos.Asset
+// NewAssetFromString reads a string an decode it to an yta.Asset
 // structure if possible. The input must contains an amount and
 // a symbol. The precision is inferred based on the actual number
 // of decimals present.
@@ -1093,20 +1093,20 @@ type VariantImplFactory = func() interface{}
 type OnVariant = func(impl interface{}) error
 
 type BaseVariant struct {
-	TypeID uint32
+	TypeID uint
 	Impl   interface{}
 }
 
-func (a *BaseVariant) Assign(typeID uint32, impl interface{}) {
+func (a *BaseVariant) Assign(typeID uint, impl interface{}) {
 	a.TypeID = typeID
 	a.Impl = impl
 }
 
-func (a *BaseVariant) Obtain() (typeID uint32, impl interface{}) {
-	return uint32(a.TypeID), a.Impl
+func (a *BaseVariant) Obtain() (typeID uint, impl interface{}) {
+	return uint(a.TypeID), a.Impl
 }
 
-func (a *BaseVariant) DoFor(doers map[uint32]OnVariant) error {
+func (a *BaseVariant) DoFor(doers map[uint]OnVariant) error {
 	if doer, found := doers[a.TypeID]; found {
 		return doer(a.Impl)
 	}
@@ -1119,7 +1119,7 @@ func (a *BaseVariant) MarshalJSON() ([]byte, error) {
 	return json.Marshal(elements)
 }
 
-func (a *BaseVariant) UnmarshalJSON(data []byte, newImplPointer map[uint32]VariantImplFactory) error {
+func (a *BaseVariant) UnmarshalJSON(data []byte, newImplPointer map[uint]VariantImplFactory) error {
 	typeIDResult := gjson.GetBytes(data, "0")
 	implResult := gjson.GetBytes(data, "1")
 
@@ -1127,7 +1127,7 @@ func (a *BaseVariant) UnmarshalJSON(data []byte, newImplPointer map[uint32]Varia
 		return fmt.Errorf("invalid format, expected '[<typeID>, <impl>]' pair, got %q", string(data))
 	}
 
-	a.TypeID = uint32(typeIDResult.Uint())
+	a.TypeID = uint(typeIDResult.Uint())
 	implFactory := newImplPointer[a.TypeID]
 	if implFactory == nil {
 		return fmt.Errorf("newImplPointer should have returned an non-nil pointer for type %d", a.TypeID)
@@ -1142,13 +1142,13 @@ func (a *BaseVariant) UnmarshalJSON(data []byte, newImplPointer map[uint32]Varia
 	return nil
 }
 
-func (a *BaseVariant) UnmarshalBinaryVariant(decoder *Decoder, newImplPointer map[uint32]VariantImplFactory) error {
+func (a *BaseVariant) UnmarshalBinaryVariant(decoder *Decoder, newImplPointer map[uint]VariantImplFactory) error {
 	typeID, err := decoder.ReadUvarint32()
 	if err != nil {
 		return fmt.Errorf("unable to read variant type ID: %s", err)
 	}
 
-	a.TypeID = uint32(typeID)
+	a.TypeID = uint(typeID)
 	implFactory := newImplPointer[a.TypeID]
 	if implFactory == nil {
 		return fmt.Errorf("newImplPointer should have returned an non-nil pointer for type %d", a.TypeID)

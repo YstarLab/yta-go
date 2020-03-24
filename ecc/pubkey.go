@@ -6,16 +6,16 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/eoscanada/eos-go/btcsuite/btcd/btcec"
-	"github.com/eoscanada/eos-go/btcsuite/btcutil/base58"
+	"github.com/YstarLab/yta-go/btcsuite/btcd/btcec"
+	"github.com/YstarLab/yta-go/btcsuite/btcutil/base58"
 	"golang.org/x/crypto/ripemd160"
 )
 
-var PublicKeyPrefix = "PUB_"
-var PublicKeyK1Prefix = "PUB_K1_"
-var PublicKeyR1Prefix = "PUB_R1_"
-var PublicKeyWAPrefix = "PUB_WA_"
-var PublicKeyPrefixCompat = "EOS"
+const PublicKeyPrefix = "PUB_"
+const PublicKeyK1Prefix = "PUB_K1_"
+const PublicKeyR1Prefix = "PUB_R1_"
+const PublicKeyWAPrefix = "PUB_WA_"
+const PublicKeyPrefixCompat = "YTA"
 
 var publicKeyDataSize = new(int)
 
@@ -148,7 +148,7 @@ func Ripemd160checksumHashCurve(in []byte, curve CurveID) []byte {
 	_, _ = h.Write(in) // this implementation has no error path
 
 	// FIXME: this seems to be only rolled out to the `SIG_` things..
-	// proper support for importing `EOS` keys isn't rolled out into `dawn4`.
+	// proper support for importing `YTA` keys isn't rolled out into `dawn4`.
 	_, _ = h.Write([]byte(curve.String())) // conditionally ?
 	sum := h.Sum(nil)
 	return sum[:4]

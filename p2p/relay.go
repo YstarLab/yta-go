@@ -35,7 +35,7 @@ func (r *Relay) startProxy(conn net.Conn) {
 		zap.String("peer1", remoteAddress),
 		zap.String("peer2", r.destinationPeerAddress))
 
-	destinationPeer := NewOutgoingPeer(r.destinationPeerAddress, "eos-relay", nil)
+	destinationPeer := NewOutgoingPeer(r.destinationPeerAddress, "yta-relay", nil)
 
 	errorChannel := make(chan error)
 

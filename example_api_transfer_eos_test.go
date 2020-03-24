@@ -1,42 +1,41 @@
 package eos_test
 
 import (
-	"context"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
 
-	eos "github.com/eoscanada/eos-go"
-	"github.com/eoscanada/eos-go/token"
+	yta "github.com/YstarLab/yta-go"
+	"github.com/YstarLab/yta-go/token"
 )
 
 func ExampleAPI_PushTransaction_transfer_EOS() {
-	api := eos.New(getAPIURL())
+	api := yta.New(getAPIURL())
 
-	keyBag := &eos.KeyBag{}
-	err := keyBag.ImportPrivateKey(context.Background(), readPrivateKey())
+	keyBag := &yta.KeyBag{}
+	err := keyBag.ImportPrivateKey(readPrivateKey())
 	if err != nil {
 		panic(fmt.Errorf("import private key: %s", err))
 	}
 	api.SetSigner(keyBag)
 
-	from := eos.AccountName("eosuser1")
-	to := eos.AccountName("eosuser2")
-	quantity, err := eos.NewEOSAssetFromString("1.0000 EOS")
+	from := yta.AccountName("eosuser1")
+	to := yta.AccountName("eosuser2")
+	quantity, err := yta.NewEOSAssetFromString("1.0000 YTA")
 	memo := ""
 
 	if err != nil {
 		panic(fmt.Errorf("invalid quantity: %s", err))
 	}
 
-	txOpts := &eos.TxOptions{}
-	if err := txOpts.FillFromChain(context.Background(), api); err != nil {
+	txOpts := &yta.TxOptions{}
+	if err := txOpts.FillFromChain(api); err != nil {
 		panic(fmt.Errorf("filling tx opts: %s", err))
 	}
 
-	tx := eos.NewTransaction([]*eos.Action{token.NewTransfer(from, to, quantity, memo)}, txOpts)
-	signedTx, packedTx, err := api.SignTransaction(context.Background(), tx, txOpts.ChainID, eos.CompressionNone)
+	tx := yta.NewTransaction([]*yta.Action{token.NewTransfer(from, to, quantity, memo)}, txOpts)
+	signedTx, packedTx, err := api.SignTransaction(tx, txOpts.ChainID, yta.CompressionNone)
 	if err != nil {
 		panic(fmt.Errorf("sign transaction: %s", err))
 	}
@@ -49,7 +48,7 @@ func ExampleAPI_PushTransaction_transfer_EOS() {
 	fmt.Println(string(content))
 	fmt.Println()
 
-	response, err := api.PushTransaction(context.Background(), packedTx)
+	response, err := api.PushTransaction(packedTx)
 	if err != nil {
 		panic(fmt.Errorf("push transaction: %s", err))
 	}

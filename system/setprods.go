@@ -1,22 +1,22 @@
 package system
 
 import (
-	eos "github.com/eoscanada/eos-go"
-	"github.com/eoscanada/eos-go/ecc"
+	yta "github.com/YstarLab/yta-go"
+	"github.com/YstarLab/yta-go/ecc"
 )
 
 // NewSetPriv returns a `setpriv` action that lives on the
 // `eosio.bios` contract. It should exist only when booting a new
-// network, as it is replaced using the `eos-bios` boot process by the
+// network, as it is replaced using the `yta-bios` boot process by the
 // `eosio.system` contract.
-func NewSetProds(producers []ProducerKey) *eos.Action {
-	a := &eos.Action{
+func NewSetProds(producers []ProducerKey) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("setprods"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{Actor: AN("eosio"), Permission: PN("active")},
 		},
-		ActionData: eos.NewActionData(SetProds{
+		ActionData: yta.NewActionData(SetProds{
 			Schedule: producers,
 		}),
 	}
@@ -29,6 +29,6 @@ type SetProds struct {
 }
 
 type ProducerKey struct {
-	ProducerName    eos.AccountName `json:"producer_name"`
+	ProducerName    yta.AccountName `json:"producer_name"`
 	BlockSigningKey ecc.PublicKey   `json:"block_signing_key"`
 }

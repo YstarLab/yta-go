@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"encoding/hex"
@@ -124,7 +124,7 @@ var accountResponseJSONData = `{
 	"privileged": false,
 	"last_code_update": "1970-01-01T00:00:00.000",
 	"created": "2018-06-10T13:09:26.500",
-	"core_liquid_balance": "695.2674 EOS",
+	"core_liquid_balance": "695.2674 YTA",
 	"ram_quota": 145360,
 	"net_weight": 324628,
 	"cpu_weight": 329628,
@@ -188,21 +188,21 @@ var accountResponseJSONData = `{
 	],
 	"total_resources": {
 		"owner": "eosriobrazil",
-		"net_weight": "32.4628 EOS",
-		"cpu_weight": "32.9628 EOS",
+		"net_weight": "32.4628 YTA",
+		"cpu_weight": "32.9628 YTA",
 		"ram_bytes": 145360
 	},
 	"self_delegated_bandwidth": {
 		"from": "eosriobrazil",
 		"to": "eosriobrazil",
-		"net_weight": "32.4628 EOS",
-		"cpu_weight": "32.9628 EOS"
+		"net_weight": "32.4628 YTA",
+		"cpu_weight": "32.9628 YTA"
 	},
 	"refund_request": {
 		"owner": "eosriobrazil",
 		"request_time": "2018-07-09T20:54:31",
-		"net_amount": "2.9284 EOS",
-		"cpu_amount": "2.9284 EOS"
+		"net_amount": "2.9284 YTA",
+		"cpu_amount": "2.9284 YTA"
 	},
 	"voter_info": {
 		"owner": "eosriobrazil",

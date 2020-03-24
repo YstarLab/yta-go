@@ -1,17 +1,17 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewREXExec(user eos.AccountName, max uint16) *eos.Action {
-	return &eos.Action{
+func NewREXExec(user yta.AccountName, max uint16) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("rexexec"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: user, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: user, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(REXExec{
+		ActionData: yta.NewActionData(REXExec{
 			User: user,
 			Max:  max,
 		}),
@@ -19,6 +19,6 @@ func NewREXExec(user eos.AccountName, max uint16) *eos.Action {
 }
 
 type REXExec struct {
-	User eos.AccountName
+	User yta.AccountName
 	Max  uint16
 }

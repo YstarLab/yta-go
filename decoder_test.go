@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -484,7 +484,7 @@ func TestDecoder_Encode(t *testing.T) {
 	assert.Equal(t, true, s.F17)
 	assert.Equal(t, Int64(100000), s.F18.Amount)
 	assert.Equal(t, uint8(4), s.F18.Precision)
-	assert.Equal(t, "EOS", s.F18.Symbol.Symbol)
+	assert.Equal(t, "YTA", s.F18.Symbol.Symbol)
 
 }
 
@@ -594,7 +594,7 @@ func TestEncoder_Encode_struct_error(t *testing.T) {
 }
 
 type TagTestStruct struct {
-	S1 string `eos:"-"`
+	S1 string `yta:"-"`
 	S2 string
 }
 
@@ -633,7 +633,7 @@ func TestEncoder_Encode_struct_tag(t *testing.T) {
 func TestDecoder_Decode_struct_tag_BinaryExtension(t *testing.T) {
 	type BinaryExtensionTestStruct struct {
 		S2 string
-		S1 string `eos:"binary_extension"`
+		S1 string `yta:"binary_extension"`
 	}
 
 	var s BinaryExtensionTestStruct
@@ -653,11 +653,11 @@ func TestDecoder_Decode_struct_tag_BinaryExtension(t *testing.T) {
 func TestDecoder_Decode_struct_tag_BinaryExtension_NotGrouped(t *testing.T) {
 	type BinaryExtensionTestStruct struct {
 		S1 string
-		S2 string `eos:"binary_extension"`
+		S2 string `yta:"binary_extension"`
 		S3 string
 	}
 
-	require.PanicsWithValue(t, "the `eos: \"binary_extension\"` tags must be packed together at the end of struct fields, problematic field S3", func() {
+	require.PanicsWithValue(t, "the `yta: \"binary_extension\"` tags must be packed together at the end of struct fields, problematic field S3", func() {
 		var s BinaryExtensionTestStruct
 		UnmarshalBinary([]byte{0x1, 0x61, 0x01, 0x62, 0x01, 0x63}, &s)
 	})
@@ -665,12 +665,12 @@ func TestDecoder_Decode_struct_tag_BinaryExtension_NotGrouped(t *testing.T) {
 
 func TestDecoder_Decode_struct_tag_BinaryExtension_AllAtStart(t *testing.T) {
 	type BinaryExtensionTestStruct struct {
-		S1 string `eos:"binary_extension"`
-		S2 string `eos:"binary_extension"`
+		S1 string `yta:"binary_extension"`
+		S2 string `yta:"binary_extension"`
 		S3 string
 	}
 
-	require.PanicsWithValue(t, "the `eos: \"binary_extension\"` tags must be packed together at the end of struct fields, problematic field S3", func() {
+	require.PanicsWithValue(t, "the `yta: \"binary_extension\"` tags must be packed together at the end of struct fields, problematic field S3", func() {
 		var s BinaryExtensionTestStruct
 		UnmarshalBinary([]byte{0x1, 0x61, 0x01, 0x62, 0x01, 0x63}, &s)
 	})

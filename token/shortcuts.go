@@ -1,7 +1,7 @@
 package token
 
-import eos "github.com/eoscanada/eos-go"
+import yta "github.com/YstarLab/yta-go"
 
-var AN = eos.AN
-var PN = eos.PN
-var ActN = eos.ActN
+var AN = yta.AN
+var PN = yta.PN
+var ActN = yta.ActN

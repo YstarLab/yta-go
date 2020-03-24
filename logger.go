@@ -1,4 +1,4 @@
-package eos
+package yta
 
 import (
 	"fmt"
@@ -12,15 +12,6 @@ var decoderLog = zap.NewNop()
 var abiEncoderLog = zap.NewNop()
 var abiDecoderLog = zap.NewNop()
 var loggingEnabled = false
-
-func EnableDebugLogging(l *zap.Logger) {
-	coreLog = l
-	encoderLog = l
-	decoderLog = l
-	abiEncoderLog = l
-	abiDecoderLog = l
-	loggingEnabled = true
-}
 
 func EnableCoreLogging() {
 	coreLog = newLogger(false)

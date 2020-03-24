@@ -1,22 +1,22 @@
 package rex
 
 import (
-	eos "github.com/eoscanada/eos-go"
+	yta "github.com/YstarLab/yta-go"
 )
 
-func NewConsolidate(owner eos.AccountName) *eos.Action {
-	return &eos.Action{
+func NewConsolidate(owner yta.AccountName) *yta.Action {
+	return &yta.Action{
 		Account: REXAN,
 		Name:    ActN("consolidate"),
-		Authorization: []eos.PermissionLevel{
-			{Actor: owner, Permission: eos.PermissionName("active")},
+		Authorization: []yta.PermissionLevel{
+			{Actor: owner, Permission: yta.PermissionName("active")},
 		},
-		ActionData: eos.NewActionData(Consolidate{
+		ActionData: yta.NewActionData(Consolidate{
 			Owner: owner,
 		}),
 	}
 }
 
 type Consolidate struct {
-	Owner eos.AccountName
+	Owner yta.AccountName
 }

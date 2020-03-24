@@ -7,7 +7,7 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/eoscanada/eos-go"
+	"github.com/YstarLab/yta-go"
 )
 
 type Proxy struct {
@@ -50,7 +50,7 @@ func (p *Proxy) read(sender *Peer, receiver *Peer, errChannel chan error) {
 	}
 }
 
-func (p *Proxy) handle(packet *eos.Packet, sender *Peer, receiver *Peer) error {
+func (p *Proxy) handle(packet *yta.Packet, sender *Peer, receiver *Peer) error {
 
 	_, err := receiver.Write(packet.Raw)
 	if err != nil {
@@ -58,7 +58,7 @@ func (p *Proxy) handle(packet *eos.Packet, sender *Peer, receiver *Peer) error {
 	}
 
 	switch m := packet.P2PMessage.(type) {
-	case *eos.GoAwayMessage:
+	case *yta.GoAwayMessage:
 		return errors.Errorf("handling message: go away: reason [%d]", m.Reason)
 	}
 

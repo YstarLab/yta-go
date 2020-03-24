@@ -1,23 +1,23 @@
 package system
 
-import "github.com/eoscanada/eos-go"
+import "github.com/YstarLab/yta-go"
 
 // NewUnlinkAuth creates an action from the `eosio.system` contract
 // called `unlinkauth`.
 //
 // `unlinkauth` detaches a previously set permission from a
 // `code::actionName`. See `linkauth`.
-func NewUnlinkAuth(account, code eos.AccountName, actionName eos.ActionName) *eos.Action {
-	a := &eos.Action{
+func NewUnlinkAuth(account, code yta.AccountName, actionName yta.ActionName) *yta.Action {
+	a := &yta.Action{
 		Account: AN("eosio"),
 		Name:    ActN("unlinkauth"),
-		Authorization: []eos.PermissionLevel{
+		Authorization: []yta.PermissionLevel{
 			{
 				Actor:      account,
-				Permission: eos.PermissionName("active"),
+				Permission: yta.PermissionName("active"),
 			},
 		},
-		ActionData: eos.NewActionData(UnlinkAuth{
+		ActionData: yta.NewActionData(UnlinkAuth{
 			Account: account,
 			Code:    code,
 			Type:    actionName,
@@ -30,7 +30,7 @@ func NewUnlinkAuth(account, code eos.AccountName, actionName eos.ActionName) *eo
 // UnlinkAuth represents the native `unlinkauth` action, through the
 // system contract.
 type UnlinkAuth struct {
-	Account eos.AccountName `json:"account"`
-	Code    eos.AccountName `json:"code"`
-	Type    eos.ActionName  `json:"type"`
+	Account yta.AccountName `json:"account"`
+	Code    yta.AccountName `json:"code"`
+	Type    yta.ActionName  `json:"type"`
 }

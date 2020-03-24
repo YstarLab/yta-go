@@ -1,10 +1,9 @@
-package eos
+package yta
 
 import (
 	"bytes"
 	"compress/flate"
 	"compress/zlib"
-	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
@@ -20,7 +19,7 @@ import (
 
 	"io/ioutil"
 
-	"github.com/eoscanada/eos-go/ecc"
+	"github.com/YstarLab/yta-go/ecc"
 )
 
 type TransactionHeader struct {
@@ -71,7 +70,7 @@ type blockHeaderExtensionMap = map[BlockHeaderExtensionType]newBlockHeaderExtens
 type newBlockHeaderExtension func() BlockHeaderExtension
 
 var blockHeaderExtensions = map[string]blockHeaderExtensionMap{
-	"EOS": blockHeaderExtensionMap{
+	"YTA": blockHeaderExtensionMap{
 		EOS_ProtocolFeatureActivation:       func() BlockHeaderExtension { return new(ProtocolFeatureActivationExtension) },
 		EOS_ProducerScheduleChangeExtension: func() BlockHeaderExtension { return new(ProducerScheduleChangeExtension) },
 	},
@@ -454,13 +453,13 @@ type TxOptions struct {
 
 // FillFromChain will load ChainID (for signing transactions) and
 // HeadBlockID (to fill transaction with TaPoS data).
-func (opts *TxOptions) FillFromChain(ctx context.Context, api *API) error {
+func (opts *TxOptions) FillFromChain(api *API) error {
 	if opts == nil {
 		return errors.New("TxOptions should not be nil, send an object")
 	}
 
 	if opts.HeadBlockID == nil || opts.ChainID == nil {
-		info, err := api.cachedGetInfo(ctx)
+		info, err := api.cachedGetInfo()
 		if err != nil {
 			return err
 		}
