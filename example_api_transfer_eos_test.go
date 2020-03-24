@@ -1,4 +1,4 @@
-package eos_test
+package yta_test
 
 import (
 	"encoding/hex"
