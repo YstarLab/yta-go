@@ -1,7 +1,7 @@
 package forum
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewUnVote is an action representing the action to undoing a current vote

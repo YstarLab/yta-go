@@ -1,7 +1,7 @@
 package forum
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewUnPost is an action undoing a post that is active

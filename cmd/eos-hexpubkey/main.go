@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/YstarLab/yta-go/ecc"
+	"github.com/ystar-foundation/yta-go/ecc"
 )
 
 func main() {

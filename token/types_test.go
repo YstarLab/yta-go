@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/YstarLab/yta-go"
+	"github.com/ystar-foundation/yta-go"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
-	yta "github.com/YstarLab/yta-go"
-	"github.com/YstarLab/yta-go/token"
+	yta "github.com/ystar-foundation/yta-go"
+	"github.com/ystar-foundation/yta-go/token"
 )
 
 func ExampleAPI_PushTransaction_transfer_EOS() {

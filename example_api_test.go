@@ -8,5 +8,5 @@ func getAPIURL() string {
 		return apiURL
 	}
 
-	return "https://mainnet.YstarLab.com"
+	return "https://mainnet.ystar-foundation.com"
 }

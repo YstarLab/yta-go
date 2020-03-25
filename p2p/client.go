@@ -9,7 +9,7 @@ import (
 
 	"time"
 
-	"github.com/YstarLab/yta-go"
+	"github.com/ystar-foundation/yta-go"
 )
 
 type Client struct {

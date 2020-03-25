@@ -1,7 +1,7 @@
 package rex
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 func NewDefundNetLoan(from yta.AccountName, loanNumber uint64, amount yta.Asset) *yta.Action {

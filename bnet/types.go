@@ -1,8 +1,8 @@
 package bnet
 
 import (
-	yta "github.com/YstarLab/yta-go"
-	"github.com/YstarLab/yta-go/ecc"
+	yta "github.com/ystar-foundation/yta-go"
+	"github.com/ystar-foundation/yta-go/ecc"
 )
 
 type BNetMessageType byte

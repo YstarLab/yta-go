@@ -1,6 +1,6 @@
 package system
 
-import "github.com/YstarLab/yta-go"
+import "github.com/ystar-foundation/yta-go"
 
 // NewDeleteAuth creates an action from the `eosio.system` contract
 // called `deleteauth`.

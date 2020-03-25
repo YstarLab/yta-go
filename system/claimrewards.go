@@ -1,7 +1,7 @@
 package system
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewClaimRewards will buy at current market price a given number of

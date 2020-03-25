@@ -8,8 +8,8 @@ import (
 	"bytes"
 	"errors"
 
-	"github.com/YstarLab/yta-go/btcsuite/btcd/btcec"
-	"github.com/YstarLab/yta-go/btcsuite/btcutil/base58"
+	"github.com/ystar-foundation/yta-go/btcsuite/btcd/btcec"
+	"github.com/ystar-foundation/yta-go/btcsuite/btcutil/base58"
 )
 
 // ErrMalformedPrivateKey describes an error where a WIF-encoded private

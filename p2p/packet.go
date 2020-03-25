@@ -1,7 +1,7 @@
 package p2p
 
 import (
-	"github.com/YstarLab/yta-go"
+	"github.com/ystar-foundation/yta-go"
 )
 
 type Envelope struct {

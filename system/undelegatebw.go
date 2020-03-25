@@ -1,7 +1,7 @@
 package system
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewUndelegateBW returns a `undelegatebw` action that lives on the

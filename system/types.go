@@ -1,6 +1,6 @@
 package system
 
-import yta "github.com/YstarLab/yta-go"
+import yta "github.com/ystar-foundation/yta-go"
 
 // BlockchainParameters are all the params we can set through `setparams`.
 type BlockchainParameters struct {

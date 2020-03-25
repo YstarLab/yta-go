@@ -1,4 +1,4 @@
-module github.com/YstarLab/yta-go
+module github.com/ystar-foundation/yta-go
 
 go 1.13
 

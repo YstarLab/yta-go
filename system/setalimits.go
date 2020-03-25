@@ -1,7 +1,7 @@
 package system
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewSetalimits sets the account limits. Requires signature from `eosio@active` account.

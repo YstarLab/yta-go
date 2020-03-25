@@ -1,6 +1,6 @@
 package msig
 
-import yta "github.com/YstarLab/yta-go"
+import yta "github.com/ystar-foundation/yta-go"
 
 type ProposalRow struct {
 	ProposalName       yta.Name              `json:"proposal_name"`

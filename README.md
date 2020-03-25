@@ -3,7 +3,7 @@ YTA.IO API library for Go
 
 [点击查看中文版](./README-cn.md)
 
-[![GoDoc](https://godoc.org/github.com/YstarLab/yta-go?status.svg)](https://godoc.org/github.com/YstarLab/yta-go)
+[![GoDoc](https://godoc.org/github.com/ystar-foundation/yta-go?status.svg)](https://godoc.org/github.com/ystar-foundation/yta-go)
 
 This library provides simple access to data structures (binary packing
 and JSON interface) and API calls to an YTA.IO RPC server, running
@@ -16,7 +16,7 @@ flux. Don't expect stability, as we're moving alongside the main
 `eosio` codebase, which changes very fast.
 
 This library is the basis for the `yta-bios` launch orchestrator tool
-at https://github.com/YstarLab/yta-bios
+at https://github.com/ystar-foundation/yta-bios
 
 
 Basic usage
@@ -31,8 +31,8 @@ fmt.Println("Permission for initn:", accountResp.Permissions[0].RequiredAuth.Key
 ```
 
 `eosio.system` and `eosio.token` contract _Actions_ are respectively in:
-* https://github.com/YstarLab/yta-go/tree/master/system ([godocs](https://godoc.org/github.com/YstarLab/yta-go/system))
-* https://github.com/YstarLab/yta-go/tree/master/token ([godocs](https://godoc.org/github.com/YstarLab/yta-go/token))
+* https://github.com/ystar-foundation/yta-go/tree/master/system ([godocs](https://godoc.org/github.com/ystar-foundation/yta-go/system))
+* https://github.com/ystar-foundation/yta-go/tree/master/token ([godocs](https://godoc.org/github.com/ystar-foundation/yta-go/token))
 
 Binaries
 --------
@@ -87,7 +87,7 @@ however.
 #### Environment Variables
 
 All examples uses by default the `https://mainnet.yta.dfuse.io` API endpoint for all
-HTTP communication and `peering.mainnet.YstarLab.com` for P2P communication.
+HTTP communication and `peering.mainnet.ystar-foundation.com` for P2P communication.
 They can respectively be overridden by specifying environment variable
 `EOS_GO_API_URL` and `EOS_GO_P2P_ENDPOINT` respectively.
 

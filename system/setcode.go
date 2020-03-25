@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 func NewSetContract(account yta.AccountName, wasmPath, abiPath string) (out []*yta.Action, err error) {

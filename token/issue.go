@@ -1,6 +1,6 @@
 package token
 
-import yta "github.com/YstarLab/yta-go"
+import yta "github.com/ystar-foundation/yta-go"
 
 func NewIssue(to yta.AccountName, quantity yta.Asset, memo string) *yta.Action {
 	return &yta.Action{

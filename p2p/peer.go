@@ -19,8 +19,8 @@ import (
 
 	"bufio"
 
-	"github.com/YstarLab/yta-go"
-	"github.com/YstarLab/yta-go/ecc"
+	"github.com/ystar-foundation/yta-go"
+	"github.com/ystar-foundation/yta-go/ecc"
 )
 
 type Peer struct {

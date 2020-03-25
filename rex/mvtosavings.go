@@ -1,7 +1,7 @@
 package rex
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 func NewMoveToSavings(owner yta.AccountName, rex yta.Asset) *yta.Action {

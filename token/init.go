@@ -1,6 +1,6 @@
 package token
 
-import "github.com/YstarLab/yta-go"
+import "github.com/ystar-foundation/yta-go"
 
 func init() {
 	yta.RegisterAction(AN("eosio.token"), ActN("transfer"), Transfer{})

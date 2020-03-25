@@ -7,7 +7,7 @@ package base58_test
 import (
 	"fmt"
 
-	"github.com/YstarLab/yta-go/btcsuite/btcutil/base58"
+	"github.com/ystar-foundation/yta-go/btcsuite/btcutil/base58"
 )
 
 // This example demonstrates how to decode modified base58 encoded data.

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/YstarLab/yta-go/btcsuite/btcd/btcec"
+	"github.com/ystar-foundation/yta-go/btcsuite/btcd/btcec"
 )
 
 type innerWAPublicKey struct {

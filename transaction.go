@@ -19,7 +19,7 @@ import (
 
 	"io/ioutil"
 
-	"github.com/YstarLab/yta-go/ecc"
+	"github.com/ystar-foundation/yta-go/ecc"
 )
 
 type TransactionHeader struct {

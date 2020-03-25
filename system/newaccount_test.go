@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	yta "github.com/YstarLab/yta-go"
-	"github.com/YstarLab/yta-go/ecc"
+	yta "github.com/ystar-foundation/yta-go"
+	"github.com/ystar-foundation/yta-go/ecc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

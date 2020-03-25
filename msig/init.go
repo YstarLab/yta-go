@@ -1,7 +1,7 @@
 package msig
 
 import (
-	"github.com/YstarLab/yta-go"
+	"github.com/ystar-foundation/yta-go"
 )
 
 func init() {

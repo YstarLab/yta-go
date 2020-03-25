@@ -1,6 +1,6 @@
 package rex
 
-import yta "github.com/YstarLab/yta-go"
+import yta "github.com/ystar-foundation/yta-go"
 
 func init() {
 	yta.RegisterAction(REXAN, ActN("buyrex"), BuyREX{})

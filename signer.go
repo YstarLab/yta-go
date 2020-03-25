@@ -10,7 +10,7 @@ import (
 
 	"strings"
 
-	"github.com/YstarLab/yta-go/ecc"
+	"github.com/ystar-foundation/yta-go/ecc"
 )
 
 type Signer interface {

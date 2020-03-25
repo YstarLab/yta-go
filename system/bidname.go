@@ -1,7 +1,7 @@
 package system
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 func NewBidname(bidder, newname yta.AccountName, bid yta.Asset) *yta.Action {

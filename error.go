@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/YstarLab/yta-go/eoserr"
+	"github.com/ystar-foundation/yta-go/eoserr"
 )
 
 // APIError represents the errors as reported by the server

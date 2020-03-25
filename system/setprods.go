@@ -1,8 +1,8 @@
 package system
 
 import (
-	yta "github.com/YstarLab/yta-go"
-	"github.com/YstarLab/yta-go/ecc"
+	yta "github.com/ystar-foundation/yta-go"
+	"github.com/ystar-foundation/yta-go/ecc"
 )
 
 // NewSetPriv returns a `setpriv` action that lives on the

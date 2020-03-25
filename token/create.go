@@ -1,6 +1,6 @@
 package token
 
-import yta "github.com/YstarLab/yta-go"
+import yta "github.com/ystar-foundation/yta-go"
 
 func NewCreate(issuer yta.AccountName, maxSupply yta.Asset) *yta.Action {
 	return &yta.Action{

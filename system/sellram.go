@@ -1,7 +1,7 @@
 package system
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewSellRAM will sell at current market price a given number of

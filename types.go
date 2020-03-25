@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/YstarLab/yta-go/ecc"
+	"github.com/ystar-foundation/yta-go/ecc"
 	"github.com/tidwall/gjson"
 )
 

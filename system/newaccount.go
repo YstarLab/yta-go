@@ -1,8 +1,8 @@
 package system
 
 import (
-	"github.com/YstarLab/yta-go"
-	"github.com/YstarLab/yta-go/ecc"
+	"github.com/ystar-foundation/yta-go"
+	"github.com/ystar-foundation/yta-go/ecc"
 )
 
 // NewNewAccount returns a `newaccount` action that lives on the

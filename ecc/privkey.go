@@ -9,8 +9,8 @@ import (
 	"io"
 	"strings"
 
-	"github.com/YstarLab/yta-go/btcsuite/btcd/btcec"
-	"github.com/YstarLab/yta-go/btcsuite/btcutil"
+	"github.com/ystar-foundation/yta-go/btcsuite/btcd/btcec"
+	"github.com/ystar-foundation/yta-go/btcsuite/btcutil"
 )
 
 const PrivateKeyPrefix = "PVT_"

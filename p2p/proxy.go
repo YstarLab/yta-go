@@ -7,7 +7,7 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/YstarLab/yta-go"
+	"github.com/ystar-foundation/yta-go"
 )
 
 type Proxy struct {

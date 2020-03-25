@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/YstarLab/yta-go/btcsuite/btcutil/base58"
+	"github.com/ystar-foundation/yta-go/btcsuite/btcutil/base58"
 )
 
 const SignatureK1Prefix = "SIG_K1_"

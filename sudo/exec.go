@@ -1,7 +1,7 @@
 package sudo
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewExec creates an `exec` action, found in the `eosio.wrap`

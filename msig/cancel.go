@@ -1,7 +1,7 @@
 package msig
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewCancel returns a `cancel` action that lives on the

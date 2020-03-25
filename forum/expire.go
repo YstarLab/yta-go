@@ -1,7 +1,7 @@
 package forum
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewExpire is an action to expire a proposal ahead of its natural death.

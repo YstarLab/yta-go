@@ -1,7 +1,7 @@
 package forum
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // CleanProposal is an action to flush proposal and allow RAM used by it.

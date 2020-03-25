@@ -1,6 +1,6 @@
 package forum
 
-import yta "github.com/YstarLab/yta-go"
+import yta "github.com/ystar-foundation/yta-go"
 
 func init() {
 	yta.RegisterAction(ForumAN, ActN("clnproposal"), CleanProposal{})

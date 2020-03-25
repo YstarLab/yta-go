@@ -1,7 +1,7 @@
 package forum
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewPost is an action representing a simple message to be posted

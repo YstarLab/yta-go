@@ -15,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/YstarLab/yta-go/ecc"
+	"github.com/ystar-foundation/yta-go/ecc"
 )
 
 type API struct {

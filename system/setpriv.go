@@ -1,6 +1,6 @@
 package system
 
-import yta "github.com/YstarLab/yta-go"
+import yta "github.com/ystar-foundation/yta-go"
 
 // NewSetPriv returns a `setpriv` action that lives on the
 // `eosio.bios` contract. It should exist only when booting a new

@@ -1,7 +1,7 @@
 package msig
 
 import (
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 // NewPropose returns a `propose` action that lives on the

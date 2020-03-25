@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 )
 
 func ExampleABI_DecodeTableRowTyped() {

@@ -1,7 +1,7 @@
 用 Go 语言与 YTA.IO 交互的 API 库
 =========================
 
-[![GoDoc](https://godoc.org/github.com/YstarLab/yta-go?status.svg)](https://godoc.org/github.com/YstarLab/yta-go)
+[![GoDoc](https://godoc.org/github.com/ystar-foundation/yta-go?status.svg)](https://godoc.org/github.com/ystar-foundation/yta-go)
 
 该库提供对数据架构（二进制打包和JSON接口）的简单访问，
 以及对远程或本地运行的EOS.IO RPC服务器的API调用。 
@@ -12,7 +12,7 @@
 因为我们要追着主网 `eosio` 代码库的脚步，而它的变化又那么快。
 
 该库主网启动编排工具是 `eosio` 的基础，网址：
-https://github.com/YstarLab/yta-bios
+https://github.com/ystar-foundation/yta-bios
 
 
 基本用法
@@ -27,16 +27,16 @@ fmt.Println("Permission for initn:", accountResp.Permissions[0].RequiredAuth.Key
 ```
 
 `eosio.system` 和 `eosio.token` 的 _Actions_ 合约分别在:
-* https://github.com/YstarLab/yta-go/tree/master/system ([godocs](https://godoc.org/github.com/YstarLab/yta-go/system))
-* https://github.com/YstarLab/yta-go/tree/master/token ([godocs](https://godoc.org/github.com/YstarLab/yta-go/token))
+* https://github.com/ystar-foundation/yta-go/tree/master/system ([godocs](https://godoc.org/github.com/ystar-foundation/yta-go/system))
+* https://github.com/ystar-foundation/yta-go/tree/master/token ([godocs](https://godoc.org/github.com/ystar-foundation/yta-go/token))
 
 范例
 -------
 
 看看库的用法的例子：
 
-* https://github.com/YstarLab/yta-bios/blob/master/bios/bios.go
-* https://github.com/YstarLab/yta-bios/blob/master/bios/ops.go
+* https://github.com/ystar-foundation/yta-bios/blob/master/bios/bios.go
+* https://github.com/ystar-foundation/yta-bios/blob/master/bios/ops.go
 * `cmd/` 下还有一些其他的 `main` 工具包。
 
 

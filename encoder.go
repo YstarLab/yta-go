@@ -11,7 +11,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/YstarLab/yta-go/ecc"
+	"github.com/ystar-foundation/yta-go/ecc"
 	"go.uber.org/zap"
 )
 

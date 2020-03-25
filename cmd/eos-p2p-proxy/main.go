@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/YstarLab/yta-go/p2p"
+	"github.com/ystar-foundation/yta-go/p2p"
 )
 
 var peer1 = flag.String("peer1", "localhost:9876", "peer 1")

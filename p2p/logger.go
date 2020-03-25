@@ -3,7 +3,7 @@ package p2p
 import (
 	"fmt"
 
-	yta "github.com/YstarLab/yta-go"
+	yta "github.com/ystar-foundation/yta-go"
 	"go.uber.org/zap"
 )
 
